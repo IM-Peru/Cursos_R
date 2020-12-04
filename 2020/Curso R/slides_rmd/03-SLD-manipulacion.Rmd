@@ -1,0 +1,462 @@
+---
+title: "Manipulacion I"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: ["default", "default-fonts", "custom.css"]
+    mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+    lib_dir: libs
+    seal: false
+    nature:
+      ratio: 13:9
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(fig.height=5) 
+library(ggplot2)
+library(readr)
+library(here)
+library(dplyr)
+library(colorspace)
+paleta <- rainbow_hcl(10)
+print_it_rainbow <- function(palabra, paleta) {
+  i_font = 1
+  for (char in palabra) {
+    if (char != " ") {
+      cat(paste0("<font style='color:", paleta[i_font] , "'>",char,"</font>"))
+      i_font = i_font %% length(paleta) + 1
+    } else {
+      cat(" ")
+    }
+  }
+}
+```
+
+background-color: #272822
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+```{r, results='asis', echo=FALSE}
+cat("<h1 style='color:white'> <center> R para contextos humanitarios de emergencia")
+cat("</center></h1> \n")
+cat("## <center>")
+palabra = unlist(strsplit("Manipulación de datos I", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center> \n")
+cat("### <center>")
+fecha = as.character(Sys.Date())
+palabra = unlist(strsplit("Violeta Roizman", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center>")
+```
+---
+
+background-color: #272822
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+```{r, results='asis', echo=FALSE}
+cat("<h1 style='color:white'> <center> Abrir el archivo 03-EJ-manipulacion.Rmd")
+cat("</center></h1> \n")
+cat("## <center>")
+palabra = unlist(strsplit("Para ir haciendo los EJ", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center> \n")
+```
+
+---
+<div class="my-header"></div>
+## Manipulación de datos
+
+El paquete `dplyr` provee una enorme cantidad de funciones útiles para manipular datos
+
+<center> <img src="img/hex-dplyr.png" alt="Hex stickers" height="100"></center>
+
+
+Las funciones más comunes:
+
+- `select()`: selecciona columnas de una tabla
+
+- `filter()` y `slice()`: selecciona (o filtra) filas de una tabla
+
+- `mutate()`: agrega nuevas columnas a una tabla
+
+- `arrange()`: ordena las filas según los valores de una columna
+
+- `group_by()`: agrupa una tabla en base al valor de una o más columnas
+
+- `summarise()`: calcula estadísticas para cada grupo de una tabla.
+
+---
+<div class="my-header"></div>
+
+## `dplyr` y tablas dinámicas
+
+A rasgos generales, las operaciones de `dplyr` permiten hacer lo que se hace en tablas dinámicas (pivot tables) en Excel. 
+
+
+.pull-left[
+Funcion de `dplyr`
+- `filter()` 
+- `group_by()`
+- `select()`
+- `summarise()`
+]
+
+.pull-right[
+Sección de tabla dinámica
+
+- "Filtros"
+- "Filas"
+-  "Columnas"
+- "Valores"
+]
+
+---
+<div class="my-header"></div>
+## Tu turno 1
+
+Te dieron una tabla con datos de temperatura mínima y máxima para distintas estaciones meteorológicas de todo el país durante los 365 días de un año. Las columnas son: id_estacion, temperatura_maxima, temperatura_minima y provincia. En base a esos datos, te piden que computes la temperatura media anual de cada estación únicamente de las estaciones de Cusco.
+
+¿En qué orden ejecutarías estos pasos para obtener el resultado deseado?
+
+- usar `summarise()` para calcular la estadística mean(temperatura_media) para cada id_estacion
+- usar `group_by()` para agrupar por la columna id_estacion
+- usar `mutate()` para agregar una columna llamada temperatura_media que sea 
+`(temperatura_minima + temperatura_maxima)/2`
+- usar `filter()` para seleccionar solo las filas donde la columnas provincia es igual a "Cusco"
+
+---
+<div class="my-header"></div>
+## Los datos
+
+Retomamos el dataset sobre decisiones de Perú frente a los pedidos de asilo 
+
+(es una traducción y simplificación del dataset de UNHCR sobre decisiones de Perú: [https://data.humdata.org/dataset/unhcr-population-data-for-per](https://data.humdata.org/dataset/unhcr-population-data-for-per))
+
+```{r, message=FALSE}
+decisiones <- read_csv("data/decisiones_asilo_peru.csv")
+decisiones
+```
+
+
+
+---
+<div class="my-header"></div>
+## Seleccionando columnas: función `select()`
+
+Si nos interesan menos columnas podemos usar `select()` así:
+
+> `select(dataset, c(columna1, columna4))`
+
+o por número de columnas `select(dataset, c(1, 4))`. También podemos excluir un conjunto de columnas:
+
+> `select(dataset, -c(columna1, columna2))`
+
+Supongamos que solo nos interesan: año, país de origen, decisión tomada(4)
+
+Entonces redefinimos el dataset de la siguiente forma
+
+```{r,}
+decisiones <- select(decisiones, 
+                     c(Anio, `Codigo Pais Origen`, Reconocidas, Rechazadas,
+                       `Proteccion Complementaria`, `Cerradas de otra forma`))
+decisiones
+```
+---
+<div class="my-header"></div>
+## Seleccionando filas: funcion `filter()`
+
+Supongamos que solo nos interesan los pedidos provenientes de Venezuela
+
+Podemos usar la función filter mas una condición lógica
+
+> filter(dataset, condicion)
+
+En este caso seria:
+
+```{r}
+decisiones_venezuela <- filter(decisiones, `Codigo Pais Origen`=="VEN")
+decisiones_venezuela
+```
+---
+<div class="my-header"></div>
+## funcion `filter()`: condiciones
+
+Las condiciones para `filter()` pueden expresarse en función de una columna del dataset o de un vector de longitud igual a la cantidad de filas del dataset.
+
+Si quiero las decisiones tomadas después de 2010:
+
+```{r}
+decisiones_despues_2010 <- filter(decisiones, Anio > 2010)
+```
+
+Si quiero cualquier decisión menos las de los años 2010 y 2015: 
+
+```{r}
+decisiones_2010_2015 <- filter(decisiones, !(Anio %in% c(2010, 2015)))
+```
+
+Si quiero solo las entradas de donde se rechazaron más que las que se aceptaron: 
+
+```{r}
+decisiones_mas_rechazos <- filter(decisiones, Rechazadas > Reconocidas)
+```
+
+---
+<div class="my-header"></div>
+## Tu turno 2: verbos `select` y `filter`
+
+1. Seleccionar solo las variables Anio, `Codigo Pais Origen `
+
+2. Filtrar las entradas de los países Turquía y Argentina
+
+---
+<div class="my-header"></div>
+## Creando nuevas variables: función `mutate()`
+
+<center><img src="img/dplyr_mutate_es.png" alt="Hex stickers" height="450"></center>
+
+
+
+---
+<div class="my-header"></div>
+## Creando nuevas variables: función `mutate()`
+
+- Queremos agregar a `decisiones` una columna con el total de pedidos de asilo correspondientes a cada fila (mas allá de la decisión tomada). 
+
+- Podemos definirla como la suma de las posibles decisiones
+
+```{r}
+decisiones <- mutate(decisiones,
+                     total = Reconocidas + 
+                       `Proteccion Complementaria` +
+                       `Cerradas de otra forma` + 
+                       Rechazadas)
+#View(decisiones)
+```
+
+---
+<div class="my-header"></div>
+## Tu turno 3: verbo `mutate`
+
+1. Generar una nueva columna que indique para cada fila si fueron rechazados mas pedidos que los aceptados
+
+2. Generar una nueva columna que indique para cada fila si el tipo de procedimiento es UNHCR
+
+3. Generar una nueva columna con la cantidad de pedidos rechazados o con proteccion complementaria
+
+---
+<div class="my-header"></div>
+## Ordenando los datos según valores: función `arrange()`
+
+Si quiero ordenar una tabla según los valores de una o más variables puedo
+
+> `arrange(dataset, columna)`
+
+Por ejemplo, si quiero saber cuales fueron los años y países con mas pedidos de asilo
+
+```{r}
+arrange(decisiones, desc(Reconocidas))
+```
+
+---
+<div class="my-header"></div>
+## Combinando funciones
+
+Queremos: 
+
+> Una tabla de las decisiones tomadas por Perú frente a pedidos de asilo, ordenada por la cantidad de total de pedidos por país cada año.
+
+Podemos obtenerla así:
+
+```{r}
+decisiones_venezuela <- filter(decisiones, `Codigo Pais Origen` == "VEN")
+decisiones_venezuela <- mutate(decisiones_venezuela,
+                               total = Reconocidas + 
+                                 `Proteccion Complementaria` + 
+                                 `Cerradas de otra forma` + Rechazadas)
+decisiones_venezuela <- arrange(decisiones_venezuela, desc(total))
+```
+
+Pero estamos repitiendo demasiadas veces la variable venezuela, existe una herramienta que nos ayuda a combinar funciones encadenadas:
+
+<center>pipe (o tubo)</center>
+
+---
+<div class="my-header"></div>
+
+## Combinando funciones
+
+<img src="img/diagrama_pipe.png"  width="900">
+
+---
+<div class="my-header"></div>
+## Combinando funciones con pipe
+
+<center>
+<img src="img/estoesunpipe.png" alt="Hex stickers" width="250">
+</center>
+
+Si reemplazamos los tubos por esto `%>%` obtenemos el resultado deseado
+
+```{r}
+decisiones %>%
+  filter(`Codigo Pais Origen` == "VEN") %>%
+  mutate(total = Reconocidas + `Proteccion Complementaria` + `Cerradas de otra forma` + Rechazadas) %>%
+  arrange(desc(total))
+  
+```
+
+---
+<div class="my-header"></div>
+
+**Encuesta:** [https://PollEv.com/multiple_choice_polls/pb0m4Fh9kGkLRYKSmIsCq/respond](https://PollEv.com/multiple_choice_polls/pb0m4Fh9kGkLRYKSmIsCq/respond)
+
+Cómo modificarias `decisiones` para que contenga las decisiones correspondientes a 
+pedidos de colombian@s ordenadas por cantidad de rechazos?
+
+a)
+```{r, eval=FALSE}
+decisiones <- decisiones %>%
+  filter(decisiones, `Codigo Pais Origen` == "COL") %>%
+  arrange(decisiones, desc(Rechazadas))
+```
+b)
+```{r, eval=FALSE}
+decisiones <- decisiones %>%
+  filter(`Codigo Pais Origen` == "COL") %>%
+  arrange(desc(Rechazadas))
+```
+c)
+```{r, eval=FALSE}
+decisiones %>%
+  filter(`Codigo Pais Origen` == "COL") %>%
+  arrange(desc(Rechazadas))
+```
+
+---
+<div class="my-header"></div>
+
+## Resumir datos: `group_by` y `summarise` 
+
+Para agrupar los datos usamos `group_by()`
+
+Supongamos que queremos saber cuantos asilos aceptados en total corresponden a cada país de origen
+
+.pull-left[
+```{r, eval = FALSE}
+decisiones 
+```
+.
+
+
+![](img/tibblegroupby1.png)
+]
+.pull-right[
+```{r, eval = FALSE}
+decisiones %>%
+  group_by(`Codigo Pais Origen`)
+```
+
+![](img/tibblegroupby2.png)
+]
+
+Los datos no se modifican, solo se agrega un indicador de que esta agrupado
+
+---
+<div class="my-header"></div>
+
+## Resumir datos: `group_by` y `summarise` 
+
+Una vez que están agrupados queremos elegir como resumirlo
+
+
+```{r}
+decisiones %>%
+  group_by(`Codigo Pais Origen`) %>%
+  summarise(total_aceptado = sum(Reconocidas))
+```
+
+---
+<div class="my-header"></div>
+
+## Resumir datos: `group_by` y `summarise` 
+
+Cual es el TOP 3 de país de origen aceptado?
+
+--
+
+```{r}
+decisiones %>%
+  group_by(`Codigo Pais Origen`) %>%
+  summarise(total_aceptado = sum(Reconocidas)) %>%
+  arrange(desc(total_aceptado))
+```
+
+---
+<div class="my-header"></div>
+
+## `summarise` por separado
+
+También `summarise` solo
+
+```{r}
+decisiones %>%
+  summarise(total_aceptados = sum(Reconocidas))
+```
+
+
+---
+<div class="my-header"></div>
+## Tu turno 4: verbos `dplyr`
+
+1. Obtener una tabla con la cantidad de pedidos de asilo rechazados por Perú durante cada año
+
+2. Ordena esta tabla de mayor a menor según la cantidad de pedidos aceptados
+
+3. Que cantidad de pedidos fueron rechazados en total durante el período estudiado?
+
+4. Crea una nueva variable
+
+---
+<div class="my-header"></div>
+
+## Resumen de esta sección:
+
+
+- Seleccionamos variables con `select()`  
+- Filtramos filas con `filter()`  
+- Ordenamos tablas con `arrange()`  
+- Hacemos tablas resumen con `summarise()`  
+- Creamos nuevas variables con `mutate()`  
+- Hacemos operaciones por grupos con `group_by()`
+
+---
+<div class="my-header"></div>
+
+## Licencia y material usado
+
+Licencia: [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/deed.es_ES).
+
+Este material está inspirado y utiliza explicaciones de:
+
+- [R para Clima](https://eliocamp.github.io/r-clima/) de Paola Corrales y Elio Campitelli
+
+- [Master the Tidyverse](https://github.com/rstudio-education/master-the-tidyverse-instructors) de Garrett Grolemund

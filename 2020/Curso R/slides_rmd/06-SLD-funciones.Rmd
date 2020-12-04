@@ -1,0 +1,143 @@
+---
+title: "Nuestras propias funciones"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: ["default", "default-fonts", "custom.css"]
+    mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+    lib_dir: libs
+    seal: false
+    nature:
+      ratio: 13:9
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(fig.height=5) 
+library(ggplot2)
+library(readr)
+library(here)
+library(dplyr)
+library(colorspace)
+paleta <- rainbow_hcl(10)
+print_it_rainbow <- function(palabra, paleta) {
+  i_font = 1
+  for (char in palabra) {
+    if (char != " ") {
+      cat(paste0("<font style='color:", paleta[i_font] , "'>",char,"</font>"))
+      i_font = i_font %% length(paleta) + 1
+    } else {
+      cat(" ")
+    }
+  }
+}
+```
+
+background-color: #272822
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+```{r, results='asis', echo=FALSE}
+cat("<h1 style='color:white'> <center> R para contextos humanitarios de emergencia")
+cat("</center></h1> \n")
+cat("## <center>")
+palabra = unlist(strsplit("Nuestras propias funciones", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center> \n")
+cat("### <center>")
+fecha = as.character(Sys.Date())
+palabra = unlist(strsplit("Violeta Roizman", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center>")
+```
+
+---
+<div class="my-header"></div>
+## Mini introducción a funciones
+
+- Si te encuentras una y otra vez copiando la misma linea de código para realizar una operación entonces es hora de escribir una función que haga esa tarea por ti.
+
+- Hasta ahora estuvimos utilizando funciones que vienen con R (lo que llamamos R base) y funciones de paquetes que están disponibles para extender las funcionalidades de R. 
+
+- función: conjunto de comandos o líneas de código definida para usarla en el futuro, con un nombre (uno que represente la acción u operación para la cual la estamos creando), elementos de entrada y el resultado final.
+
+---
+<div class="my-header"></div>
+## Definición de funciones
+
+Supongamos que una medica desea efectuar una evaluación del índice de masa corporal en los adultos de un campamento. En base a esto se planearan acciones.
+
+$IMC = peso (kg) / altura^2 (metros)$
+
+
+```{r}
+IMC <- function(peso, altura) {
+  valor_IMC <- peso / altura^2
+  return(valor_IMC)
+}
+```
+
+Al correr estas lineas de código se generará un nuevo elemento en nuestro entorno (mesada). La función está lista para ser usada. Pero antes de probarla revisemos la receta para definir una función.
+
+**function** indica que es una función y las **llaves delimitan** el cuerpo de la función. La función puede recibir uno o más elementos de entrada: los argumentos. En este caso recibe 2.
+
+---
+<div class="my-header"></div>
+## Usando la función
+
+Ahora probemos calcular mi índice de masa corporal utilizando la función.
+
+
+```{r}
+IMC(60, 1.65)
+```
+
+Los elementos de entrada en este caso son 2 números (60 y 1.65) y nos devolvió un número. Probemos con dos vectores
+
+```{r}
+peso_adultos <- c(50, 60, 45, 70, 100)
+altura_adultos <- c(1.65, 1.66, 1.6, 1.61, 1.7)
+IMC(peso_adultos, altura_adultos)
+```
+- Es importante respetar el orden! 
+
+```{r}
+IMC(altura_adultos, peso_adultos)
+```
+
+
+- Los vectores deben tener la misma longitud!
+
+---
+<div class="my-header"></div>
+## Reflexiones sobre funciones
+
+- Definir funciones nos abre todo un mundo de posibilidades `r emo::ji("earth")`
+
+- Cuando tengamos varias funciones definidas para trabajar en un mismo proyecto podemos hacer nuestro propio paquete! `r emo::ji("gift")`
+
+- Y si pensamos que le puede servir a otras personas podemos publicarlo para que sea accesible! Incluso ell@s pueden ayudarme a arreglar y extender mi paquete incorporando nuevas funcionalidades. 
+
+---
+<div class="my-header"></div>
+
+## Licencia y material usado
+
+Licencia: [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/deed.es_ES).
+
+Este material está inspirado y utiliza explicaciones de:
+
+- [R para Clima](https://eliocamp.github.io/r-clima/) de Paola Corrales y Elio Campitelli
+
+- [Master the Tidyverse](https://github.com/rstudio-education/master-the-tidyverse-instructors) de Garrett Grolemund
+
+

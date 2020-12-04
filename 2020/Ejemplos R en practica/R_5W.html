@@ -3213,7 +3213,12 @@ slide:not(.current) .plotly.html-widget{
 
 <p>Se importan los datos y se hace una primera ronda de limpieza:</p>
 
-<pre class = 'prettyprint lang-r'>LIMA &lt;- read_excel(path=DATA_path, sheet=&quot;Lima&quot;, skip = 2)
+<pre class = 'prettyprint lang-r'>library(readxl)
+library(plyr)
+library(tidyverse)
+library(openxlsx)
+
+LIMA &lt;- read_excel(path=DATA_path, sheet=&quot;Lima&quot;, skip = 2)
 LIMA$Departamento &lt;- &quot;Lima&quot;
 LIMA[,14:28] &lt;- lapply(LIMA[,14:28], as.numeric)
 LIMA$Organización &lt;- trimws(LIMA$Organización)

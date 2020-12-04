@@ -1,0 +1,355 @@
+---
+title: "Proyectos y RMarkdown"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: ["default", "default-fonts", "custom.css"]
+    mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+    lib_dir: libs
+    seal: false
+    nature:
+      ratio: 13:9
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(fig.height=5) 
+library(ggplot2)
+library(readr)
+library(here)
+library(dplyr)
+library(colorspace)
+paleta <- rainbow_hcl(10)
+print_it_rainbow <- function(palabra, paleta) {
+  i_font = 1
+  for (char in palabra) {
+    if (char != " ") {
+      cat(paste0("<font style='color:", paleta[i_font] , "'>",char,"</font>"))
+      i_font = i_font %% length(paleta) + 1
+    } else {
+      cat(" ")
+    }
+  }
+}
+```
+
+background-color: #272822
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+```{r, results='asis', echo=FALSE}
+cat("<h1 style='color:white'> <center> R para contextos humanitarios de emergencia")
+cat("</center></h1> \n")
+cat("## <center>")
+palabra = unlist(strsplit("Proyectos y RMarkdown", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center> \n")
+cat("### <center>")
+fecha = as.character(Sys.Date())
+palabra = unlist(strsplit("Violeta Roizman", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center>")
+```
+
+---
+background-color: #272822
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+```{r, results='asis', echo=FALSE}
+cat("# <center>")
+palabra = unlist(strsplit("Proyectos", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center>")
+```
+
+---
+<div class="my-header"></div>
+## Directorio de trabajo
+
+R va a buscar en el "directorio de trabajo" por defecto cualquier archivo que le pidas leer (y va a guardarlo ahí también)
+
+Puedes averiguar cual es:
+
+```{r}
+getwd()
+```
+
+Puedes cambiarlo también: 
+
+```{r, eval=FALSE}
+setwd("C\\Users\\violeta\\mi_carpeta_favorita")
+```
+
+Pero existe una herramienta para no tener que lidiar con esto:
+
+<center>`r emo::ji("star")`PROYECTOS`r emo::ji("star")`</center>
+
+
+---
+
+<div class="my-header"></div>
+## Siempre vamos a trabajar en proyectos
+Qué es?
+- Carpeta que contiene TODOS los archivos relacionados a un proyecto
+  - .R (codigo en R)
+  - Imagenes (.png, .pdf, etc)
+  - Datos (.csv, .xls, etc)
+
+Por qué es ventajoso trabajar en ellos?
+- Es más ordenado
+
+- Ayuda a trabajar con *paths* relativos y no absolutos
+
+- Si quiero abrir un dato dentro de mi proyecto
+
+> "mi_dato.csv" 
+
+en lugar de 
+
+> "C\\Users\\violeta\\mi_carpeta_favorita\\mi_dato.csv"
+
+---
+
+<div class="my-header"></div>
+## Tu turno: Crea un nuevo proyecto en RStudio
+
+1. Haz click en el menú “Archivo” (`File`) y luego en “Nuevo Proyecto” (`New Project`)
+
+2. Haz click en “Nueva Carpeta” (`New Directory`)
+
+3. Haz click en “Nuevo Proyecto” (`New Project`)
+
+4. Escribe el nombre de la carpeta que alojará a tu proyecto, por ejemplo “mi_proyecto”
+
+5. Haz click en “Crear Proyecto” (`Create Project`)
+
+---
+
+<div class="my-header"></div>
+## Tu turno: Abre tu nuevo proyecto desde el explorador de archivos
+
+1. Cierra RStudio
+
+2. Desde el explorador de archivos, busca la carpeta donde creaste tu proyecto.
+
+3. Haz doble click en el archivo que tiene el nombre de tu proyecto (y que termina con .Rproj) que encontrarás en esa carpeta.
+
+---
+
+<div class="my-header"></div>
+## Estructura de un proyecto
+
+- Carpeta que contiene TODOS los archivos relacionados a un proyecto
+
+- Ordenado con sub-carpetas
+
+- Subcarpetas que deberían estar si o si (hay que agregarlas)
+  - datos (o data)
+  - img
+
+- En general hay una subcarpeta R para contener el código
+
+- mi_proyecto/
+  - datos/
+      - dataset1.csv
+      - dataset2.xls
+  - img/
+      - foto1.jpg
+      - diagrama1.png
+  - R/
+      - limpiar_datos.R
+
+
+---
+<div class="my-header"></div>
+## Manejo de un proyecto
+
+Puedes crear nuevas carpetas para organizar tu proyecto en el explorador de carpetas o en la pestaña `Files` de la alacena de RStudio (abajo a la derecha)
+
+Para guardar un archivo de código, haz como normalmente en Windows 
+
+> File->Save/Save as->Elegir normbre si corresponde + Guardar/Save
+
+**Tu turno:**
+
+1. Crea una carpeta llamada R dentro del proyecto creado
+
+1. Crea un archivo con un vector con los numeros del 1 al 30
+
+2. Guarda el vector en una variable llamada `mes`
+
+3. Guarda el codigo con el nombre "mes.R"
+
+---
+background-color: #272822
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+```{r, results='asis', echo=FALSE}
+cat("# <center>")
+palabra = unlist(strsplit("RMarkdown", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center>")
+```
+---
+<div class="my-header"></div>
+## RMarkdown: combinar todo junto
+
+![](img/allisonrmarkdown.png)
+<p style="color: gray; font-size:15px"> Ilustración adaptada de Allison Horst
+</p>
+
+---
+<div class="my-header"></div>
+## Una notebook RMarkdown
+
+![](img/rmarkdownintro.png)
+<p style="color: gray; font-size:15px"> Imagen adaptada del curso "Master the tidyverse" - Garrett Grolemund <br>
+github.com/rstudio-education/master-the-tidyverse-instructors
+</p>
+
+---
+<div class="my-header"></div>
+## Tu turno: Crea una notebook RMarkdown
+
+1. File > New File > RMarkdown...
+
+2. Elegir un nombre del archivo 
+
+3. Elegir formato deseado
+
+4. Guardar
+
+Se genera una plantilla con un ejemplo, extensión del archivo es ".Rmd"
+
+Para generar el output hay que apretar el botón Knit
+
+<center><img src="img/knit.png" height="250"></center>
+
+---
+<div class="my-header"></div>
+## Estructura de un .Rmd
+
+Cualquier archivo de este tipo tiene 3 partes principales:
+
+- El **encabezado** o **yaml** que determina generalidades como formato de salida, etc.
+
+- El **texto** que puede estar a lo largo de todo el documento 
+
+- El **código en bloques** o **chuncks**
+
+<center><img src="img/elementosRM2.png" alt="Hex stickers" height="325"></center>
+
+---
+<div class="my-header"></div>
+## Markdown
+
+Cuando escribimos el texto de nuestro archivo, podemos agregar cierta sintaxis para que el texto generado no se vea solo como un block de notas
+
+- **negrita** usando dos asteriscos así: `**negrita**`  
+- *italizada* con un asterisco de cada lado: `*italics*`
+
+lista de elementos utilizando guiones medios
+
+``` r
+- la negrita se consigue con dos asteriscos
+- la italizada con un asterisco
+- y para resaltar código se usa el acento grave `
+```
+
+---
+<div class="my-header"></div>
+## Markdown
+
+También:
+
+- Títulos con distinta jerarquía agregando `#` al comienzo. Esto además define secciones dentro del documento:
+
+```
+# Título
+## El primer subtítulo
+### Sub con menos jerarquia, etc.
+```
+
+- Link a una página externa: "[text to show]""(http://the-web-page.com)" 
+
+- Incluir una imagen: "!(http://url/for/file)"
+
+---
+<div class="my-header"></div>
+## Posibles resultados finales de RMarkdown
+
+- Word
+- HTML
+- PDF (se necesita instalar `tinytex::install_tinytex()`, no probar ahora! tarda mucho tiempo)
+
+<center>
+<img src="img/outputRMhtml.png" alt="Hex stickers" width="300">
+<img src="img/outputRMword.png" alt="Hex stickers" width="300">
+</center>
+
+<center><img src="img/outputpdf.png" alt="Hex stickers" width="300"></center>
+
+---
+
+background-color: #272822
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+```{r, results='asis', echo=FALSE}
+cat("# <center>")
+palabra = unlist(strsplit("Ahora es tu turno!", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center> \n")
+cat("## <center>")
+palabra = unlist(strsplit("Abre el archivo 01-EJ-RMarkdown.Rmd", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center> \n")
+cat("### <center>")
+fecha = as.character(Sys.Date())
+palabra = unlist(strsplit("Sigue las instrucciones", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center>")
+```
+
+
+---
+<div class="my-header"></div>
+
+## Licencia y material usado
+
+Licencia: [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/deed.es_ES).
+
+Este material está inspirado y utiliza explicaciones de:
+
+- [R para Clima](https://eliocamp.github.io/r-clima/) de Paola Corrales y Elio Campitelli
+
+- [Master the Tidyverse](https://github.com/rstudio-education/master-the-tidyverse-instructors) de Garrett Grolemund

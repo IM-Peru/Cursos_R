@@ -1,0 +1,353 @@
+---
+title: "Intro"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: ["default", "default-fonts", "custom.css"]
+    mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+    lib_dir: libs
+    seal: false
+    nature:
+      ratio: 13:9
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(fig.height=5) 
+library(ggplot2)
+library(readr)
+library(here)
+library(dplyr)
+library(colorspace)
+paleta <- rainbow_hcl(10)
+print_it_rainbow <- function(palabra, paleta) {
+  i_font = 1
+  for (char in palabra) {
+    if (char != " ") {
+      cat(paste0("<font style='color:", paleta[i_font] , "'>",char,"</font>"))
+      i_font = i_font %% length(paleta) + 1
+    } else {
+      cat(" ")
+    }
+  }
+}
+```
+
+background-color: #272822
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+```{r, results='asis', echo=FALSE}
+cat("<h1 style='color:white'> <center> R para contextos humanitarios de emergencia")
+cat("</center></h1> \n")
+cat("## <center>")
+palabra = unlist(strsplit("Reportes paramétricos y más", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center> \n")
+cat("### <center>")
+fecha = as.character(Sys.Date())
+palabra = unlist(strsplit("Violeta Roizman", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center>")
+```
+
+---
+<div class="my-header"></div>
+## Personalizando reportes
+
+Ya sabemos lo basico sobre generar reportes.
+
+- RMarkdown y sus elementos
+  - bloques de codigo (chunks)
+  - texto
+  - encabezado (hasta ahora no lo tocamos)
+
+- Tipo de output
+
+- Knit para generar
+
+Pero ya vimos que las salidas por ahora no son muy lindas
+
+
+En este modulo vamos a ver como personalizarlos para que sean publicables y mas eficientes
+
+---
+<div class="my-header"></div>
+## Agregar tabla de contenidos
+
+Por ejemplo, si quiero agregar una tabla de contenidos con los titulos y subtitulos puedo agregar en el encabezado el termino "toc: TRUE"
+
+```{r, eval = FALSE}
+---
+output: 
+  html_document:
+    toc: TRUE
+---
+```
+
+Es importante que respetemos la estructura tal como se indica! (los espacios y la alineacion de toc con respecto a html_document)
+
+```{r, eval = FALSE}
+---
+output: 
+  word_document:
+    toc: TRUE
+---
+```
+
+---
+<div class="my-header"></div>
+## Automatizando reportes
+
+
+Es muy común tener que hacer un reporte cuyo resultado dependa de ciertos parámetros.
+
+Por ejemplo, podrías tener un reporte que analiza las decisiones a los pedidos de asilo de personas colombianas en Perú.
+
+```{r, message = FALSE, eval=FALSE}
+library(tidyverse)
+
+decisiones <- read_csv("data/decisiones_asilo_peru.csv")
+
+decisiones_filtrado <- decisiones %>% 
+  filter(`Codigo Pais Origen` == "COL")
+
+decisiones_filtrado %>% 
+  ggplot(aes(Anio, Reconocidas)) +
+  geom_line(color = "red", size = 1.5)
+```
+
+---
+<div class="my-header"></div>
+## Automatizando reportes
+
+
+Es muy común tener que hacer un reporte cuyo resultado dependa de ciertos parámetros.
+
+Por ejemplo, podrías tener un reporte que analiza las decisiones a los pedidos de asilo de personas colombianas en Perú.
+
+```{r, message = FALSE, echo=FALSE}
+library(tidyverse)
+
+decisiones <- read_csv("data/decisiones_asilo_peru.csv")
+
+decisiones_filtrado <- decisiones %>% 
+  filter(`Codigo Pais Origen` == "COL")
+
+decisiones_filtrado %>% 
+  ggplot(aes(Anio, Reconocidas)) +
+  geom_line(color = "red", size = 1.5)
+```
+
+
+
+---
+<div class="my-header"></div>
+## Automatizando reportes
+
+Si ahora querés hacer el mismo reporte pero para Haiti, tienes que abrir el archivo y modificar la llamada a `filter` para quedarte sólo con ese país:
+
+```{r, message=FALSE, eval = FALSE}
+library(tidyverse)
+
+decisiones <- read_csv("data/decisiones_asilo_peru.csv")
+
+decisiones_filtrado <- decisiones %>% 
+  filter(`Codigo Pais Origen` == "HTI")
+
+decisiones_filtrado %>% 
+  ggplot(aes(Anio, Reconocidas)) +
+  geom_line(color = "red", size = 1.5)
+```
+
+Si el reporte es largo y usa el nombre del país en múltiples lugares cambiar "COL" por "HTI" puede ser tedioso y propenso a error, ya que te obliga a modificar muchas partes del código. 
+
+---
+<div class="my-header"></div>
+## Automatizando reportes
+
+Si ahora querés hacer el mismo reporte pero para Haiti, tienes que abrir el archivo y modificar la llamada a `filter` para quedarte sólo con ese país:
+
+```{r, message=FALSE, echo=FALSE}
+library(tidyverse)
+
+decisiones <- read_csv("data/decisiones_asilo_peru.csv")
+
+decisiones_filtrado <- decisiones %>% 
+  filter(`Codigo Pais Origen` == "HTI")
+
+decisiones_filtrado %>% 
+  ggplot(aes(Anio, Reconocidas)) +
+  geom_line(color = "red", size = 1.5)
+```
+
+Si el reporte es largo y usa el nombre del país en múltiples lugares cambiar "COL" por "HTI" puede ser tedioso y propenso a error, ya que te obliga a modificar muchas partes del código. 
+
+---
+<div class="my-header"></div>
+## Parametrizando reportes
+
+En estas situaciones podés crear un reporte parametrizado. La idea es que el reporte tiene una serie de parámetros que puede modificar la salida. Es como si el archivo de R Markdown fuera una gran función con sus argumentos!
+
+Para generar un reporte parametrizado hay que agregar un elemento llamado params al encabezado con la lista de parámetros y sus valores por default.
+
+```{r, eval=FALSE}
+params:
+  pais: COL
+```
+
+
+
+---
+<div class="my-header"></div>
+## Parametrizando reportes
+
+```{r, eval=FALSE}
+library(tidyverse)
+
+decisiones <- read_csv("data/decisiones_asilo_peru.csv")
+
+decisiones_filtrado <- decisiones %>% 
+  filter(`Codigo Pais Origen` == params$pais)
+
+decisiones_filtrado %>% 
+  ggplot(aes(Anio, Reconocidas)) +
+  geom_line(color = "red", size = 1.5)
+```
+
+
+---
+<div class="my-header"></div>
+## Automatizando reportes
+
+Posibilidades
+
+```{r, eval = FALSE}
+for (pais_actual in c("HTI", "VEN", "COL")) {
+  rmarkdown::render("reporte_final.Rmd", 
+                  output_file = paste0("reporte-",
+                                       pais_actual,
+                                       ".docx"),
+                  params = list(pais = pais_actual))
+}
+```
+Este codigo crea 3 reportes!
+---
+<div class="my-header"></div>
+## Control de chunks
+
+Hay una serie de opciones que controlan si el código se ejecuta y si el resultado del código va a quedar en el reporte o no:
+
+- `eval = FALSE` evita que se corra el código del chunk, de manera que tampoco va a mostrar resultados. Es útil para mostrar códigos de ejemplo si estás escribiendo, por ejemplo un documento para enseñar R.
+
+- `echo = FALSE` corre el código del chunk y muestra los resultados, pero oculta el código en el reporte. Esto es útil para escribir reportes para personas que no necesitan ver el código de R que generó el gráfico o tabla.
+
+- `include = FALSE` corre el código pero oculta tanto el código como los resultados. Es útil para usar en chunks de configuración general donde cargas las librerías.
+
+---
+<div class="my-header"></div>
+## Control de chunks
+
+- Si estás escribiendo un informe en el que no querés que se muestre ningún código, agregarle echo = FALSE a cada chunk nuevo se vuelve tedioso. 
+
+- Solución: cambiar la opción de forma global de manera que aplique a todos los chunks. Esto se hace mediante la función knitr::opts_chunk$set()
+, que setea las opciones globales de los chunks que le siguen. (Ya esta agregado en el primer bloque del documento reporte_final.Rmd)
+
+---
+<div class="my-header"></div>
+## Control de chunks
+
+- Vimos que a veces algunas funciones imprimen mensajes sobre lo que hacen. Por ejemplo, cuando read_csv lee un archivo describe el tipo de dato de cada columna
+
+- Esto es útil pero en general no quiere que quede en el reporte. Para que no muestre estos mensajes basta con poner la opción message = FALSE
+
+- Si queremos evitar una advertencia (warning) podemos indicar tamben warning = FALSE, separado por coma de los otros mensajes
+
+---
+<div class="my-header"></div>
+## Tu turno
+
+En el archivo reporte_final.Rmd elige las opciones adedcuadas para cada chunk
+
+---
+<div class="my-header"></div>
+## Mejores reportes 
+
+- Mejores graficos 
+- Mejores tablas
+
+---
+<div class="my-header"></div>
+## Temas en `ggplot2`
+
+
+- [https://ggplot2.tidyverse.org/reference/ggtheme.html](https://ggplot2.tidyverse.org/reference/ggtheme.html)
+
+- [https://mran.microsoft.com/snapshot/2017-02-04/web/packages/ggthemes/vignettes/ggthemes.html](https://mran.microsoft.com/snapshot/2017-02-04/web/packages/ggthemes/vignettes/ggthemes.html)
+
+---
+<div class="my-header"></div>
+## Temas en `ggplot2`
+
+
+```{r minimal}
+decisiones_filtrado %>% 
+  ggplot(aes(Anio, Reconocidas)) +
+  geom_line(color = "red", size = 1.5) +
+  theme_minimal()
+```
+
+---
+<div class="my-header"></div>
+## Temas en `ggplot2`
+
+
+```{r ggthemes }
+# install.packages("ggthemes")
+library(ggthemes)
+decisiones_filtrado %>% 
+  ggplot(aes(Anio, Reconocidas)) +
+  geom_line(color = "red", size = 1.5) +
+  theme_fivethirtyeight()
+```
+
+
+---
+<div class="my-header"></div>
+## Tablas simples con kable
+
+```{r}
+library(knitr)
+kable(decisiones)
+```
+
+---
+<div class="my-header"></div>
+## Tablas lindas con `kableExtra`
+
+El paquete `kableExtra`, como su nombre lo indica, nació para extender el poder de la función kable.
+
+Descargalo y prueba sus funcionalidades
+
+
+---
+<div class="my-header"></div>
+
+## Licencia y material usado
+
+Licencia: [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/deed.es_ES).
+
+Este material está inspirado y utiliza explicaciones de:
+
+- [R para Clima](https://eliocamp.github.io/r-clima/) de Paola Corrales y Elio Campitelli
+
+- [Master the Tidyverse](https://github.com/rstudio-education/master-the-tidyverse-instructors) de Garrett Grolemund

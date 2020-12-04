@@ -1,0 +1,223 @@
+---
+title: "Interaccion con Kobo y Power BI"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: ["default", "default-fonts", "custom.css"]
+    mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+    lib_dir: libs
+    seal: false
+    nature:
+      ratio: 13:9
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(fig.height=5) 
+library(ggplot2)
+library(readr)
+library(here)
+library(dplyr)
+library(colorspace)
+paleta <- rainbow_hcl(10)
+print_it_rainbow <- function(palabra, paleta) {
+  i_font = 1
+  for (char in palabra) {
+    if (char != " ") {
+      cat(paste0("<font style='color:", paleta[i_font] , "'>",char,"</font>"))
+      i_font = i_font %% length(paleta) + 1
+    } else {
+      cat(" ")
+    }
+  }
+}
+```
+
+background-color: #272822
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+```{r, results='asis', echo=FALSE}
+cat("<h1 style='color:white'> <center> R para contextos humanitarios de emergencia")
+cat("</center></h1> \n")
+cat("## <center>")
+palabra = unlist(strsplit("Interacción con Kobo y Power BI", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center> \n")
+cat("### <center>")
+fecha = as.character(Sys.Date())
+palabra = unlist(strsplit("Violeta Roizman", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center>")
+```
+
+---
+<div class="my-header"></div>
+## Kobo
+
+Supongamos que tenemos que realizar muchas veces por semana un reporte de datos proveniente de un relevamiento recogido en Kobo Toolbox.
+
+Tenemos muchas formas de hacerlo pero lo mas comodo sera con un único código que podamos ejecutar y que nos genere el reporte automáticamente. 
+
+Podemos hacer esto con R a través de la API (Application Programming Interface) de Kobo Toolbox.
+
+---
+<div class="my-header"></div>
+## Kobo
+
+Tenemos que generar en R una URL que le indique a Kobo lo que necesitamos
+
+```{r, eval=FALSE}
+install.packages(c("httr", "jsonlite"))
+library(httr)
+library(jsonlite)
+```
+
+
+```{r, eval=FALSE}
+# A completar con tus datos
+usuario = "tallerrkobo"
+contrasenia = "TallerRKobo123"
+form_id = "559546" 
+# puedes obtener el numero de tu formulario aqui :
+# https://im.unhcr.org/kobosupport/#form
+server = "kc.kobotoolbox.org"
+# o "kc.humanitarianresponse.info" o "kc.kobotoolbox.org"
+
+# Generar datos 
+URL <- paste0("https://", server, "/api/v1/data/", form_id, ".csv")
+res <- GET(URL, authenticate(usuario, contrasenia), progress())
+
+respuestas <- read_csv(res$content)
+```
+
+---
+<div class="my-header"></div>
+## Kobo: subir formulario
+
+Existen otras funcionalidades de Kobo
+
+- Desarrollar formularios en R y actualizarlos desde R
+- El formato en este caso es xls
+
+```{r, eval = FALSE}
+library(devtools)
+library(httr)
+# correr este codigo para cargar funciones, escribirlo todo en 1 linea:
+source_url("https://raw.githubusercontent.com/
+           ppsapkota/kobohr_apitoolbox/master/
+           R/r_func_ps_kobo_utils.R")
+
+#"kf.kobotoolbox.org" o "kobo.humanitarianresponse.info"
+kpi_url <- "https://kf.kobotoolbox.org/imports/"
+kobo_form_xlsx <- "test-formulario.xlsx" #tu formulario
+
+# la siguiente funcion crea un borrador en tu usuario
+# con las preguntas indicadas en el xlsx
+d_content<-kobohr_kpi_upload_xlsform(kpi_url,
+                kobo_form_xlsx,
+                "tallerrkobo",
+                "TallerRKobo123")
+import_url <- d_content$url
+```
+
+---
+<div class="my-header"></div>
+## Kobo: subir formulario
+
+```{r, eval = FALSE}
+d_content <- kobohr_kpi_get_asset_uid(import_url, #del paso anterior
+                                      "tallerrkobo",
+                                      "TallerRKobo123")
+asset_uid <- d_content$messages$created$uid
+# codigo del formulario que aparecera en borradores en KoboToolbox
+```
+
+<center><img src="img/kobotoolbox.png" alt="Hex stickers" height="350"></center>
+
+---
+<div class="my-header"></div>
+## Power BI
+
+Hay varios tipos de interacción posible entre R y Power BI. Vamos a ver 2 interacciones posibles:
+
+- Carga de datos a través de R
+
+- Generación de gráficos con scripts de R
+
+También puede usarse R para hacer queries de consulta y para importar ciertos datos desde el Market
+
+---
+<div class="my-header"></div>
+## Power BI - Importar datos
+
+1)
+<center><img src="img/PowerBI1.png" alt="Hex stickers" height="450"></center>
+
+---
+<div class="my-header"></div>
+## Power BI - Importar datos
+
+2)
+<center><img src="img/PowerBI2.png" alt="Hex stickers" height="450"></center>
+
+---
+<div class="my-header"></div>
+## Power BI - Importar datos
+
+3)
+<center><img src="img/PowerBI3.png" alt="Hex stickers" height="450"></center>
+
+---
+<div class="my-header"></div>
+## Power BI - Importar datos
+
+4)
+<center><img src="img/PowerBI4.png" alt="Hex stickers" height="450"></center>
+
+---
+<div class="my-header"></div>
+## Power BI - Graficos de R en Power BI
+
+Generar un grafico de R en Power BI
+
+<center><img src="img/PowerBI5.png" alt="Hex stickers" height="450"></center>
+
+---
+<div class="my-header"></div>
+## Power BI - Graficos de R en Power BI
+
+Puedo agregar sliders para poder interactuar y filtrar con el grafico
+
+Los gráficos generados en R se actualizaran automáticamente
+
+<center><img src="img/PowerBI6.png" height="400"></center>
+
+---
+<div class="my-header"></div>
+## Resumen
+
+Para tener un abanico mayor de opciones, conecta a R con otras herramientas!
+
+<center><img src="img/starwars-teamwork.png" alt="Hex stickers" height="450"></center>
+
+<p style="color: gray; font-size:15px"> Ilustración de Allison Horst
+</p>
+
+---
+<div class="my-header"></div>
+
+## Licencia y material usado
+
+Licencia: [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/deed.es_ES).
+
+

@@ -1,0 +1,162 @@
+---
+title: "04-EJ-visualizacion"
+output: html_document
+---
+
+Trabajaremos en principio con los dos datasets conocidos hasta ahora: Haiti y decisiones
+
+```{r include=FALSE, message=FALSE}
+library(tidyverse)
+library(readxl)
+url_haiti <- "https://data.humdata.org/dataset/27baf423-2d13-49a4-bd72-cb65d8f924da/resource/9f71ab56-8a9a-4df2-be5d-f26d3600a285/download/dtm-haiti-site-assessment-round-33.xlsx"
+destfile <- "dtm_haiti_site_assessment_round_33.xlsx"
+curl::curl_download(url_haiti, destfile)
+haiti <- read_excel(destfile, 
+    col_types = c("text", "text", "text", 
+        "numeric", "numeric", "numeric", 
+        "numeric", "numeric", "numeric", 
+        "text", "text", "text", "text", "text", 
+        "text", "text", "text", "text"))
+haiti <- slice(haiti, -1)
+haiti
+```
+
+```{r, include = FALSE, message=FALSE}
+decisiones <- read_csv("data/decisiones_asilo_peru.csv")
+decisiones
+```
+
+
+## Tu turno 1: Mi primer gráfico
+
+
+Copia y corre el código para generar el gráfico que queremos
+
+
+```{r}
+ggplot(data = haiti) +
+  geom_point(mapping = aes(x = Households, y = Individuals))
+```
+
+## Tu turno 2
+
+Reproducir este histograma de la variable Households con la ayuda de la guía rápida de `ggplot2`. Usa `geom_histogram`
+
+Ayuda: no utilizar la variable `y`
+
+```{r}
+ggplot(data = haiti) + 
+  geom_histogram(mapping = aes(Individuals))
+```
+
+
+# Tu turno 3
+
+Reproducir este gráfico de barras que grafica la cantidad de campamentos en cada comuna. Utiliza la ayuda de la guía rápida de `ggplot2`. Usa `geom_bar`
+
+Ayuda: no utilizar la variable `y`
+
+```{r}
+ggplot(data = haiti) + 
+  geom_bar(mapping = aes(x = Commune, fill = Commune))
+```
+
+
+# Tu turno 4
+
+Predice la salida del siguiente código
+
+Luego, córrelo
+
+```{r, eval = FALSE}
+ggplot(data = haiti) + 
+  geom_point(mapping = aes(x = Households, y = Individuals)) +
+  geom_smooth(mapping = aes(x = Households, y = Individuals))
+```
+
+## Tu turno 5
+
+Salva tu último gráfico en la carpeta img de tu proyecto
+
+Si por algún motivo no estás en un proyecto, vuelve al proyecto del curso
+
+```{r}
+ggsave("img/my-plot.pdf")
+```
+
+
+## DESAFIO 2 para practicar despues
+
+1. Importa el dataset `dtm3-peru` (cuidado con la primera fila de la tabla, salteala)
+
+https://data.humdata.org/dataset/dad01c41-adde-46ee-998d-a6baf9eeb8d1/resource/538975d3-f7bb-4f0d-9111-58f7e00ee4f1/download/dtm3_version_publica_1209-1.xlsx
+
+2. Cuántas personas respondieron la encuesta?
+
+3. Haz un gráfico que represente la distribución del "Número de Familias que viven en la misma carpa o techo"
+
+4. Representa con la ayuda de la guía rápida un gráfico de barras lado a lado del "Número de Familias que viven en la misma carpa o techo" que discrimine según distrito
+
+```{r}
+library(readxl)
+url <- "https://data.humdata.org/dataset/dad01c41-adde-46ee-998d-a6baf9eeb8d1/resource/538975d3-f7bb-4f0d-9111-58f7e00ee4f1/download/dtm3_version_publica_1209-1.xlsx"
+destfile <- "dtm3_version_publica_1209_1.xlsx"
+curl::curl_download(url, destfile)
+dtm3_version_publica_1209_1 <- read_excel(destfile, 
+    col_types = c("text", "text", "text", 
+        "text", "text", "date", "text", "text", 
+        "text", "text", "text", "text", "numeric", 
+        "text", "text", "text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "numeric", "numeric", "numeric", 
+        "numeric", "numeric", "numeric", 
+        "numeric", "numeric", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "text", "numeric", "numeric", "numeric", 
+        "numeric", "numeric", "numeric", 
+        "numeric", "numeric", "numeric", 
+        "text", "numeric", "numeric", "numeric", 
+        "numeric", "numeric", "numeric", 
+        "numeric", "numeric", "numeric", 
+        "numeric", "numeric", "text", "text", 
+        "numeric", "numeric", "numeric", 
+        "numeric", "numeric", "text", "text", 
+        "numeric", "numeric", "numeric", 
+        "numeric", "numeric", "numeric", 
+        "numeric", "numeric", "numeric", 
+        "numeric", "text", "text", "numeric", 
+        "numeric", "numeric", "numeric", 
+        "numeric", "numeric", "numeric", 
+        "numeric", "numeric", "numeric", 
+        "text", "text", "numeric", "numeric", 
+        "numeric", "numeric", "numeric", 
+        "numeric", "text", "text", "numeric", 
+        "numeric", "numeric", "numeric", 
+        "numeric", "numeric", "numeric", 
+        "numeric", "numeric", "text", "text", 
+        "text", "text", "numeric", "text", 
+        "text", "text"), skip = 1)
+View(dtm3_version_publica_1209_1)
+
+# 2. cantidad de filas
+nrow(dtm3_version_publica_1209_1)
+
+# 3. 
+ggplot(dtm3_version_publica_1209_1) +
+  geom_bar(aes(x = `Número de Familias que viven en la misma carpa o techo`))
+
+# 4. 
+ggplot(dtm3_version_publica_1209_1) +
+  geom_bar(aes(x = `Número de Familias que viven en la misma carpa o techo`)) +
+  facet_wrap(~Distrito)
+```
+

@@ -1,0 +1,77 @@
+---
+title: "03-EJ-manipulacion"
+output: html_document
+---
+
+En esta sección trabajaremos con el paquete dplyr para modificar datos. Usaremos los el dataset decisiones Perú.
+
+Los cargamos en este bloque de código
+
+```{r}
+library(tidyverse)
+decisiones <- read_csv("data/decisiones_asilo_peru.csv")
+```
+
+
+## Tu turno 1
+
+Te dieron una tabla con datos de temperatura mínima y máxima para distintas estaciones meteorológicas de todo el país durante los 365 días de un año. Las columnas son: id_estacion, temperatura_maxima, temperatura_minima y provincia. En base a esos datos, te piden que computes la temperatura media anual de cada estación únicamente de las estaciones de Cusco.
+
+¿En qué orden ejecutarías estos pasos para obtener el resultado deseado?
+
+- usar `summarise()` para calcular la estadística mean(temperatura_media) para cada id_estacion
+- usar `group_by()` para agrupar por la columna id_estacion
+- usar `mutate()` para agregar una columna llamada temperatura_media que sea 
+`(temperatura_minima + temperatura_maxima)/2`
+- usar `filter()` para seleccionar solo las filas donde la columnas provincia es igual a "Cusco"
+
+
+## Tu turno 2: verbos `select` y `filter`
+
+1. Seleccionar solo las variables Anio, `Codigo Pais Origen`
+
+2. Filtrar las entradas de los países Turquía y Argentina
+
+
+```{r}
+decisiones_2 <- select(decisiones, c(Anio, `Codigo Pais Origen`))
+# la barra vertical es un "o"
+decisiones_3 <- filter(decisiones, `Codigo Pais Origen` == "ARG" | `Codigo Pais Origen` == "TUR")
+```
+
+## Tu turno 3: verbo `mutate`
+
+1. Generar una nueva columna que indique para cada fila si fueron rechazados mas pedidos que los aceptados
+
+2. Generar una nueva columna que indique para cada fila si el tipo de procedimiento es UNHCR
+
+3. Generar una nueva columna con la cantidad de pedidos rechazados o con proteccion complementaria
+
+```{r}
+decisiones_ind_1 <- mutate(decisiones, indicador = as.numeric(Rechazadas > Reconocidas))
+
+decisiones_ind_2 <- mutate(decisiones, indicador = `Nombre del Procedimiento` == "UNHCR")
+
+decisiones_ind_3 <- mutate(decisiones, indicador = Rechazadas + `Proteccion Complementaria`)
+```
+
+
+## Tu turno 4: verbos `dplyr`
+
+1. Obtener una tabla con la cantidad de pedidos de asilo rechazados por Perú durante cada año
+
+2. Ordena esta tabla de mayor a menor según la cantidad de pedidos rechazados
+
+3. Que cantidad de pedidos fueron rechazados en total durante el período estudiado?
+
+
+```{r}
+decisiones_rechazados_peru <- decisiones %>%
+  group_by(Anio) %>%
+  summarise(total_anio_rech = sum(Rechazadas)) %>%
+  arrange(desc(total_anio_rech))
+
+total_rechazadas <- decisiones %>%
+  summarise(total = sum(Rechazadas))
+
+```

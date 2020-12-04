@@ -76,6 +76,12 @@ El flujo de datos para la 5W es el siguiente:
 Se importan los datos y se hace una primera ronda de limpieza:
  
 ```{r eval=FALSE}
+
+library(readxl)
+library(plyr)
+library(tidyverse)
+library(openxlsx)
+
 LIMA <- read_excel(path=DATA_path, sheet="Lima", skip = 2)
 LIMA$Departamento <- "Lima"
 LIMA[,14:28] <- lapply(LIMA[,14:28], as.numeric)

@@ -1,0 +1,296 @@
+---
+title: "Manipulacion II"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: ["default", "default-fonts", "custom.css"]
+    mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+    lib_dir: libs
+    seal: false
+    nature:
+      ratio: 13:9
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(fig.height=5) 
+library(kableExtra)
+library(ggplot2)
+library(readr)
+library(here)
+library(dplyr)
+library(colorspace)
+paleta <- rainbow_hcl(10)
+print_it_rainbow <- function(palabra, paleta) {
+  i_font = 1
+  for (char in palabra) {
+    if (char != " ") {
+      cat(paste0("<font style='color:", paleta[i_font] , "'>",char,"</font>"))
+      i_font = i_font %% length(paleta) + 1
+    } else {
+      cat(" ")
+    }
+  }
+}
+```
+
+background-color: #272822
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+```{r, results='asis', echo=FALSE}
+cat("<h1 style='color:white'> <center> R para contextos humanitarios de emergencia")
+cat("</center></h1> \n")
+cat("## <center>")
+palabra = unlist(strsplit("Manipulación de datos II", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center> \n")
+cat("### <center>")
+fecha = as.character(Sys.Date())
+palabra = unlist(strsplit("Violeta Roizman", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center>")
+```
+---
+
+background-color: #272822
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+```{r, results='asis', echo=FALSE}
+cat("<h1 style='color:white'> <center> Abrir el archivo 05-EJ-manipulacionII.Rmd")
+cat("</center></h1> \n")
+cat("## <center>")
+palabra = unlist(strsplit("Para ir haciendo los EJ", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center> \n")
+```
+
+---
+<div class="my-header"></div>
+## Datos ordenados
+
+El entorno tidyverse esta basado en el concepto de datos ordenados
+
+Un dataset está ordenado si:
+- Cada variable está en una columna
+- Cada observacion está una fila
+- Cada valor se encuentra en una celda
+
+
+<center><img src="img/tidy.png"  height="300"></center>
+
+
+---
+<div class="my-header"></div>
+## Transformando a tidy
+
+Veamos la siguiente tabla de la cantidad total de los pedidos de asilo recibidas.  Las variables involucradas son país, año y cantidad de cados. Está ordenada la tabla? 
+
+```{r, echo = FALSE, message=FALSE}
+library(tidyverse)
+pedidos_asilo <- tribble(
+  ~Pais, ~"2011", ~"2012", ~"2013",
+      "ARG",    7000,    6900,    7000,
+      "PER",    5800,    6000,    6200,
+      "TUR",   15000,   14000,   13000
+)
+contaminacion <- tribble(
+       ~ciudad, ~tamanio_particula, ~cantidad,
+  "Cusco", "p grande",      23,
+  "Cusco", "p pequenia",      14,
+    "London", "p grande",      22,
+    "London", "p pequenia",      16,
+   "Beijing", "p grande",     121,
+   "Beijing", "p pequenia",     121
+)
+knitr::kable(pedidos_asilo, "html")
+```
+
+Me gustaría que estuviera así:
+
+```{r, echo = FALSE}
+pedidos_asilo_tidy <- pivot_longer(pedidos_asilo,cols = c(2,3,4),names_to = "Anio", values_to = "cantidad")
+knitr::kable(pedidos_asilo_tidy)
+```
+
+---
+
+<div class="my-header"></div>
+
+## Transformando a tidy: `pivot_longer`
+
+La funcion `pivot_longer` se encarga de esto!
+
+Pasa de una tabla ancha a una table mas larga.
+
+Hay que idenfificar cuáles son las columnas que dejarán de ser fila y pasarán a ser los valores de una nueva columna. Estas columnas serán la llave de la transformación
+
+.pull-left[
+```{r, echo=FALSE}
+kbl(pedidos_asilo) 
+```
+
+]
+
+.pull-right[
+```{r, echo=FALSE}
+kbl(pedidos_asilo_tidy) %>%
+  column_spec(2, background = "yellow")
+```
+
+]
+
+---
+<div class="my-header"></div>
+## Transformando a tidy: `pivot_longer`
+
+```{r}
+pedidos_asilo_tidy <- pivot_longer(pedidos_asilo, 
+                                   cols = c(2, 3, 4), 
+                                   names_to = "Anio", 
+                                   values_to = "cantidad")
+```
+
+- data corresponde a la tabla a modificar
+- cols corresponde a las **columnas a ser pivoteadas**
+- names_to corresponde al **nombre** que agrupará a las columnas de interés
+- values_to corresponde al **nombre** de la variable que agrupará a los valores
+
+```{r, echo=FALSE}
+kbl(pedidos_asilo_tidy) %>%
+  column_spec(2, background = "yellow")
+```
+
+---
+<div class="my-header"></div>
+## `pivot_longer`: idea del funcionamiento
+
+desde el **formato ancho** al **formato largo**
+
+<center><img src="img/ancho-a-largo.png" height="450"></center>
+
+<p style="color: gray; font-size:15px"> Imagen del curso "R para Clima" - Paola Corrales y Elio Campitelli <br>
+https://eliocamp.github.io/r-clima/index.html
+</p>
+
+---
+<div class="my-header"></div>
+## Transformando a tidy: `pivot_wider`
+
+Por otro lado, tenemos 
+
+```{r, echo = FALSE}
+knitr::kable(contaminacion)
+```
+
+---
+<div class="my-header"></div>
+## Transformando a tidy: `pivot_wider`
+
+Que tampoco esta ordenada, pero en el sentido contrario (es larga en este caso !). Me gustaría que estuviera así:
+
+```{r, echo = FALSE}
+contaminacion_tidy <- pivot_wider(contaminacion,names_from = tamanio_particula,values_from = cantidad)
+knitr::kable(contaminacion_tidy)
+```
+
+Debo identificar a las dos columnas que esconden más de una variable. En este caso, tamanio_particula contiene los nombres de las futuras variables (names_from), y cantidad esconde el nombre de la segunda variable
+
+```{r}
+contaminacion_tidy <- pivot_wider(contaminacion, 
+                                  names_from = tamanio_particula, 
+                                  values_from = cantidad)
+```
+
+me devuelve el resultado deseado
+
+---
+<div class="my-header"></div>
+## Tu turno 1: `pivot_wider`
+
+Covertir paises_largo al formato ordenado (variables como columnas)
+
+```{r, message = FALSE}
+paises_largo <- read_csv("data/paises_largo.csv")
+knitr::kable(paises_largo[1:6,])
+```
+
+
+---
+<div class="my-header"></div>
+## Combinando tablas de datos!
+
+Hasta ahora todo lo que usamos de `dplyr` involucra trabajar y modificar con una sola tabla a la vez
+
+En ese caso, tenemos que unir estas tablas. a partir de una o más variables en común o keys.
+
+**En Excel**: 
+
+“VLOOKUP” o “BUSCARV”
+
+**En R:**
+
+familia de funciones *_join(). 
+
+Hay una función cada tipo de unión que queramos hacer.
+
+---
+<div class="my-header"></div>
+
+## familia `join`
+
+<center><img src="img/join.png" height="180"></center>
+
+- `full_join():` devuelve todas las filas y todas las columnas de ambas tablas `x` e `y`. Cuando no coinciden los elementos, devuelve `NA` (dato faltante). Esto significa que no se pierden filas de ninguna de las dos tablas aún cuando no hay coincidencia. 
+
+- `left_join():` devuelve todas las filas de `x` y todas las columnas de `x` e `y`. Las filas en `x` que no tengan coincidencia con `y` tendrán `NA` en las nuevas columnas. Si hay múltiples coincidencias entre `x` e `y`, devuelve todas las coincidencias posibles.
+
+
+- `inner_join():` devuelve todas las filas de `x` donde hay coincidencias con `y` y todas las columnas de `x` e `y`. Si hay múltiples coincidencias entre `x` e `y`, entonces devuelve todas las coincidencias. Eliminará las filas (observaciones) que no coincidan en ambas tablas.
+
+---
+<div class="my-header"></div>
+
+## full_join
+
+<center><img src="img/join_family.png" height="450"></center>
+
+<p style="color: gray; font-size:15px"> Imagen del curso "R para Clima" - Paola Corrales y Elio Campitelli <br>
+https://eliocamp.github.io/r-clima/index.html
+</p>
+
+---
+<div class="my-header"></div>
+
+## Tu turno 2: para practicar después
+
+Unir la tabla de países obtenida en Tu turno 1 con la tabla de decisiones de asilo  (decisiones_asilo_peru). Utiliza como llave a las columnas con el nombre del país y el año.
+
+---
+<div class="my-header"></div>
+
+## Licencia y material usado
+
+Licencia: [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/deed.es_ES).
+
+Este material está inspirado y utiliza explicaciones de:
+
+- [R para Clima](https://eliocamp.github.io/r-clima/) de Paola Corrales y Elio Campitelli
+
+- [Master the Tidyverse](https://github.com/rstudio-education/master-the-tidyverse-instructors) de Garrett Grolemund

@@ -1,0 +1,49 @@
+---
+title: "05-EJ-manipulacionII"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+# este bloque de codigo setea nuestra sesion y carga tidyverse
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+# Manipulacion II
+
+En esta libreta practicamos las funciones de `tidyr`.
+
+## Primero cargamos los datos
+
+Los chequea que te encuentres en el proyecto correcto y que tus datasets esten ubicados en la carpeta data contenida en este proyecto
+
+```{r}
+decisiones <- read_csv("data/decisiones_asilo_peru.csv")
+decisiones
+```
+
+```{r}
+paises_largo <- read_csv("data/paises_largo.csv")
+paises_largo
+```
+
+## Tu turno 1: `pivot_wider`
+
+Covertir paises_largo al formato ordenado (variables como columnas)
+
+```{r, message = FALSE}
+paises_largo_tidy <- pivot_wider(paises_largo, 
+                                 names_from = variable,
+                                 values_from = valor)
+paises_largo_tidy
+```
+
+## Tu turno 2: para practicar después
+
+Nos interesa anexar la informacion de la esperanza de vida de los países de origen  a la tabla de decisiones: Unir la tabla de países obtenida en Tu turno 1 (paises_largo_tidy) con la tabla de decisiones de asilo (decisiones). Utiliza como llave a las columnas con el nombre del país y el año. 
+
+```{r}
+# no llegamos a verlo
+```
+
+

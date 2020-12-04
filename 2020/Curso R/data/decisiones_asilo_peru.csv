@@ -1,0 +1,165 @@
+Anio,Codigo Pais Origen,Codigo Pais Asilo,Nombre Pais de Origen,Nombre Pais Asilo,Tipo de procedimiento,Nombre del Procedimiento,Codigo de Tipo de Decision,Tipo de Datos de Decision,Datos de Decision,Promedio de Personas de decision por Caso,Reconocidas,Proteccion Complementaria,Cerradas de otra forma,Rechazadas
+2000,COL,PER,Colombia,Peru,U,UNHCR,FI,P,Persons,0,0,0,5,0
+2000,CUB,PER,Cuba,Peru,U,UNHCR,FI,P,Persons,0,0,0,0,10
+2001,RUS,PER,Russian Federation,Peru,G,Government,FI,P,Persons,0,5,0,0,0
+2002,COL,PER,Colombia,Peru,G,Government,FI,P,Persons,0,5,0,0,5
+2002,CUB,PER,Cuba,Peru,G,Government,FI,P,Persons,0,5,0,0,0
+2003,ARG,PER,Argentina,Peru,G,Government,FI,P,Persons,0,0,0,5,0
+2003,COL,PER,Colombia,Peru,G,Government,FI,P,Persons,0,19,0,53,0
+2003,CUB,PER,Cuba,Peru,G,Government,FI,P,Persons,0,0,0,5,0
+2003,PSE,PER,State of Palestine,Peru,G,Government,FI,P,Persons,0,5,0,0,0
+2003,IRQ,PER,Iraq,Peru,G,Government,FI,P,Persons,0,5,0,0,0
+2004,COL,PER,Colombia,Peru,G,Government,FI,P,Persons,0,49,0,0,5
+2004,CUB,PER,Cuba,Peru,G,Government,FI,P,Persons,0,17,0,5,0
+2004,PSE,PER,State of Palestine,Peru,G,Government,FI,P,Persons,0,5,0,0,0
+2004,IRQ,PER,Iraq,Peru,G,Government,FI,P,Persons,0,0,0,5,0
+2005,COL,PER,Colombia,Peru,G,Government,FI,P,Persons,0,51,0,5,20
+2005,CUB,PER,Cuba,Peru,G,Government,FI,P,Persons,0,27,0,0,0
+2005,IRQ,PER,Iraq,Peru,G,Government,FI,P,Persons,0,0,0,5,0
+2005,SOM,PER,Somalia,Peru,G,Government,FI,P,Persons,0,0,0,5,0
+2006,COL,PER,Colombia,Peru,G,Government,FI,P,Persons,0,40,0,22,12
+2006,CUB,PER,Cuba,Peru,G,Government,FI,P,Persons,0,35,0,0,5
+2006,IRQ,PER,Iraq,Peru,G,Government,FI,P,Persons,0,0,0,5,0
+2006,ISR,PER,Israel,Peru,G,Government,FI,P,Persons,0,0,0,5,0
+2006,SLE,PER,Sierra Leone,Peru,G,Government,FI,P,Persons,0,0,0,5,0
+2006,SOM,PER,Somalia,Peru,G,Government,FI,P,Persons,0,0,0,5,0
+2007,BOL,PER,Bolivia (Plurinational State of),Peru,G,Government,FI,P,Persons,0,5,0,0,0
+2007,COL,PER,Colombia,Peru,G,Government,FI,P,Persons,0,48,0,15,19
+2007,CUB,PER,Cuba,Peru,G,Government,FI,P,Persons,0,19,0,5,50
+2007,ERI,PER,Eritrea,Peru,G,Government,FI,P,Persons,0,0,0,5,0
+2007,PSE,PER,State of Palestine,Peru,G,Government,FI,P,Persons,0,10,0,0,0
+2007,HTI,PER,Haiti,Peru,G,Government,FI,P,Persons,0,0,0,5,0
+2007,IRQ,PER,Iraq,Peru,G,Government,FI,P,Persons,0,15,0,5,0
+2007,SOM,PER,Somalia,Peru,G,Government,FI,P,Persons,0,0,0,5,0
+2007,SRB,PER,Serbia,Peru,G,Government,FI,P,Persons,0,0,0,5,0
+2007,VEN,PER,Venezuela (Bolivarian Republic of),Peru,G,Government,FI,P,Persons,0,5,0,0,0
+2008,COL,PER,Colombia,Peru,G,Government,FI,P,Persons,3,40,0,0,11
+2008,CUB,PER,Cuba,Peru,G,Government,FI,P,Persons,3,42,0,0,40
+2008,HTI,PER,Haiti,Peru,G,Government,FI,P,Persons,3,5,0,13,0
+2008,VEN,PER,Venezuela (Bolivarian Republic of),Peru,G,Government,FI,P,Persons,3,5,0,0,0
+2009,BOL,PER,Bolivia (Plurinational State of),Peru,G,Government,FI,P,Persons,3,5,0,5,0
+2009,COL,PER,Colombia,Peru,G,Government,FI,P,Persons,3,43,0,225,19
+2009,CUB,PER,Cuba,Peru,G,Government,FI,P,Persons,3,18,0,24,13
+2009,PSE,PER,State of Palestine,Peru,G,Government,FI,P,Persons,3,0,0,5,0
+2009,HTI,PER,Haiti,Peru,G,Government,FI,P,Persons,3,5,0,0,0
+2009,NPL,PER,Nepal,Peru,G,Government,FI,P,Persons,3,0,0,5,0
+2009,SRB,PER,Serbia,Peru,G,Government,FI,P,Persons,3,5,0,0,0
+2009,VEN,PER,Venezuela (Bolivarian Republic of),Peru,G,Government,FI,P,Persons,3,5,0,5,0
+2010,COL,PER,Colombia,Peru,G,Government,FI,P,Persons,3,33,0,214,0
+2010,CUB,PER,Cuba,Peru,G,Government,FI,P,Persons,3,0,0,100,20
+2010,DOM,PER,Dominican Republic,Peru,G,Government,FI,P,Persons,3,0,0,0,5
+2010,ECU,PER,Ecuador,Peru,G,Government,FI,P,Persons,3,0,0,0,5
+2010,HTI,PER,Haiti,Peru,G,Government,FI,P,Persons,3,0,5,0,0
+2011,ARG,PER,Argentina,Peru,G,Government,FI,P,Persons,3,0,0,10,0
+2011,BOL,PER,Bolivia (Plurinational State of),Peru,G,Government,FI,P,Persons,3,5,0,0,0
+2011,COL,PER,Colombia,Peru,G,Government,FI,P,Persons,3,5,0,23,0
+2011,CUB,PER,Cuba,Peru,G,Government,FI,P,Persons,3,5,0,11,34
+2011,HTI,PER,Haiti,Peru,G,Government,FI,P,Persons,3,5,0,102,0
+2011,NER,PER,Niger,Peru,G,Government,FI,P,Persons,3,0,0,5,0
+2011,NGA,PER,Nigeria,Peru,G,Government,FI,P,Persons,3,0,0,10,0
+2011,ZAF,PER,South Africa,Peru,G,Government,FI,P,Persons,3,0,0,5,0
+2011,SLE,PER,Sierra Leone,Peru,G,Government,FI,P,Persons,3,0,0,5,0
+2011,VEN,PER,Venezuela (Bolivarian Republic of),Peru,G,Government,FI,P,Persons,3,5,0,5,0
+2012,BGD,PER,Bangladesh,Peru,G,Government,FI,P,Persons,3,12,0,0,0
+2012,COL,PER,Colombia,Peru,G,Government,FI,P,Persons,3,120,0,81,0
+2012,CUB,PER,Cuba,Peru,G,Government,FI,P,Persons,3,5,0,12,121
+2012,DOM,PER,Dominican Republic,Peru,G,Government,FI,P,Persons,3,5,0,0,0
+2012,HTI,PER,Haiti,Peru,G,Government,FI,P,Persons,3,0,0,10,0
+2012,NGA,PER,Nigeria,Peru,G,Government,FI,P,Persons,3,5,0,0,0
+2012,VEN,PER,Venezuela (Bolivarian Republic of),Peru,G,Government,FI,P,Persons,3,5,0,0,5
+2013,BGD,PER,Bangladesh,Peru,G,Government,FI,P,Persons,3,0,0,0,5
+2013,COL,PER,Colombia,Peru,G,Government,FI,P,Persons,3,36,0,83,31
+2013,CUB,PER,Cuba,Peru,G,Government,FI,P,Persons,3,13,0,10,47
+2013,DOM,PER,Dominican Republic,Peru,G,Government,FI,P,Persons,3,0,0,0,10
+2013,HTI,PER,Haiti,Peru,G,Government,FI,P,Persons,3,5,0,125,0
+2013,IND,PER,India,Peru,G,Government,FI,P,Persons,3,0,0,0,5
+2013,NPL,PER,Nepal,Peru,G,Government,FI,P,Persons,3,0,0,5,0
+2013,NGA,PER,Nigeria,Peru,G,Government,FI,P,Persons,3,5,0,0,0
+2013,SEN,PER,Senegal,Peru,G,Government,FI,P,Persons,3,0,0,5,0
+2013,SYR,PER,Syrian Arab Republic,Peru,G,Government,FI,P,Persons,3,5,0,0,0
+2013,UKR,PER,Ukraine,Peru,G,Government,FI,P,Persons,3,5,0,0,0
+2014,ARG,PER,Argentina,Peru,G,Government,FI,P,Persons,3.5,0,0,0,10
+2014,BGD,PER,Bangladesh,Peru,G,Government,FI,P,Persons,3.5,14,0,0,0
+2014,COL,PER,Colombia,Peru,G,Government,FI,P,Persons,3.5,71,0,93,104
+2014,CUB,PER,Cuba,Peru,G,Government,FI,P,Persons,3.5,22,0,5,43
+2014,DOM,PER,Dominican Republic,Peru,G,Government,FI,P,Persons,3.5,5,0,18,15
+2014,ECU,PER,Ecuador,Peru,G,Government,FI,P,Persons,3.5,0,0,0,13
+2014,PSE,PER,State of Palestine,Peru,G,Government,FI,P,Persons,3.5,5,0,0,0
+2014,HTI,PER,Haiti,Peru,G,Government,FI,P,Persons,3.5,5,0,0,0
+2014,IND,PER,India,Peru,G,Government,FI,P,Persons,3.5,0,0,0,11
+2014,IRQ,PER,Iraq,Peru,G,Government,FI,P,Persons,3.5,10,0,0,0
+2014,LKA,PER,Sri Lanka,Peru,G,Government,FI,P,Persons,3.5,0,0,10,0
+2014,NGA,PER,Nigeria,Peru,G,Government,FI,P,Persons,3.5,5,0,0,0
+2014,SLV,PER,El Salvador,Peru,G,Government,FI,P,Persons,3.5,0,0,5,0
+2014,SYR,PER,Syrian Arab Republic,Peru,G,Government,FI,P,Persons,3.5,17,0,0,0
+2014,VEN,PER,Venezuela (Bolivarian Republic of),Peru,G,Government,FI,P,Persons,3.5,5,0,0,14
+2015,BGD,PER,Bangladesh,Peru,G,Government,FI,P,Persons,4,5,0,0,14
+2015,COL,PER,Colombia,Peru,G,Government,FI,P,Persons,4,59,0,0,89
+2015,CUB,PER,Cuba,Peru,G,Government,FI,P,Persons,4,24,0,0,70
+2015,DOM,PER,Dominican Republic,Peru,G,Government,FI,P,Persons,4,5,0,0,25
+2015,ECU,PER,Ecuador,Peru,G,Government,FI,P,Persons,4,0,0,0,5
+2015,PSE,PER,State of Palestine,Peru,G,Government,FI,P,Persons,4,5,0,0,0
+2015,HTI,PER,Haiti,Peru,G,Government,FI,P,Persons,4,5,0,0,0
+2015,IND,PER,India,Peru,G,Government,FI,P,Persons,4,0,0,0,5
+2015,NGA,PER,Nigeria,Peru,G,Government,FI,P,Persons,4,5,0,0,5
+2015,SEN,PER,Senegal,Peru,G,Government,FI,P,Persons,4,0,0,0,5
+2015,SYR,PER,Syrian Arab Republic,Peru,G,Government,FI,P,Persons,4,10,0,0,0
+2015,UKN,PER,NA,Peru,G,Government,FI,P,Persons,4,5,0,0,0
+2015,UKR,PER,Ukraine,Peru,G,Government,FI,P,Persons,4,11,0,0,0
+2015,VEN,PER,Venezuela (Bolivarian Republic of),Peru,G,Government,FI,P,Persons,4,71,0,0,51
+2016,BGD,PER,Bangladesh,Peru,G,Government,FI,P,Persons,0,0,0,0,5
+2016,BOL,PER,Bolivia (Plurinational State of),Peru,G,Government,FI,P,Persons,0,5,0,0,0
+2016,CMR,PER,Cameroon,Peru,G,Government,FI,P,Persons,0,0,0,0,5
+2016,COD,PER,Democratic Republic of the Congo,Peru,G,Government,FI,P,Persons,0,5,0,0,0
+2016,COL,PER,Colombia,Peru,G,Government,FI,P,Persons,0,32,0,13,32
+2016,CUB,PER,Cuba,Peru,G,Government,FI,P,Persons,0,17,0,5,32
+2016,DOM,PER,Dominican Republic,Peru,G,Government,FI,P,Persons,0,5,0,0,12
+2016,PSE,PER,State of Palestine,Peru,G,Government,FI,P,Persons,0,5,0,0,0
+2016,GHA,PER,Ghana,Peru,G,Government,FI,P,Persons,0,0,0,0,5
+2016,HTI,PER,Haiti,Peru,G,Government,FI,P,Persons,0,20,0,0,0
+2016,IND,PER,India,Peru,G,Government,FI,P,Persons,0,5,0,0,0
+2016,NGA,PER,Nigeria,Peru,G,Government,FI,P,Persons,0,0,0,0,5
+2016,PHL,PER,Philippines,Peru,G,Government,FI,P,Persons,0,0,0,0,5
+2016,SYR,PER,Syrian Arab Republic,Peru,G,Government,FI,P,Persons,0,5,0,0,0
+2016,UKR,PER,Ukraine,Peru,G,Government,FI,P,Persons,0,5,0,0,0
+2016,VEN,PER,Venezuela (Bolivarian Republic of),Peru,G,Government,FI,P,Persons,0,64,0,28,69
+2017,BGD,PER,Bangladesh,Peru,G,Government,FI,P,Persons,0,5,0,0,0
+2017,CMR,PER,Cameroon,Peru,G,Government,FI,P,Persons,0,5,0,0,0
+2017,COL,PER,Colombia,Peru,G,Government,FI,P,Persons,0,13,0,26,15
+2017,CUB,PER,Cuba,Peru,G,Government,FI,P,Persons,0,36,0,48,78
+2017,DOM,PER,Dominican Republic,Peru,G,Government,FI,P,Persons,0,0,0,10,0
+2017,ECU,PER,Ecuador,Peru,G,Government,FI,P,Persons,0,0,0,5,0
+2017,PSE,PER,State of Palestine,Peru,G,Government,FI,P,Persons,0,0,0,5,0
+2017,HTI,PER,Haiti,Peru,G,Government,FI,P,Persons,0,0,0,0,11
+2017,IND,PER,India,Peru,G,Government,FI,P,Persons,0,0,0,0,5
+2017,NPL,PER,Nepal,Peru,G,Government,FI,P,Persons,0,0,0,0,5
+2017,SEN,PER,Senegal,Peru,G,Government,FI,P,Persons,0,0,0,5,0
+2017,SYR,PER,Syrian Arab Republic,Peru,G,Government,FI,P,Persons,0,5,0,0,0
+2017,VEN,PER,Venezuela (Bolivarian Republic of),Peru,G,Government,FI,P,Persons,0,102,0,155,412
+2018,BGD,PER,Bangladesh,Peru,G,Government,FI,P,Persons,0,0,0,14,0
+2018,BOL,PER,Bolivia (Plurinational State of),Peru,G,Government,FI,P,Persons,0,5,0,0,0
+2018,BRA,PER,Brazil,Peru,G,Government,FI,P,Persons,0,5,0,0,0
+2018,CMR,PER,Cameroon,Peru,G,Government,FI,P,Persons,0,10,0,0,0
+2018,COL,PER,Colombia,Peru,G,Government,FI,P,Persons,0,10,0,67,5
+2018,CUB,PER,Cuba,Peru,G,Government,FI,P,Persons,0,70,0,24,96
+2018,DOM,PER,Dominican Republic,Peru,G,Government,FI,P,Persons,0,5,0,0,0
+2018,GHA,PER,Ghana,Peru,G,Government,FI,P,Persons,0,0,0,5,0
+2018,HTI,PER,Haiti,Peru,G,Government,FI,P,Persons,0,20,0,5,0
+2018,PHL,PER,Philippines,Peru,G,Government,FI,P,Persons,0,5,0,0,0
+2018,ROU,PER,Romania,Peru,G,Government,FI,P,Persons,0,0,0,0,5
+2018,SLV,PER,El Salvador,Peru,G,Government,FI,P,Persons,0,0,0,0,5
+2018,SEN,PER,Senegal,Peru,G,Government,FI,P,Persons,0,0,0,5,0
+2018,SYR,PER,Syrian Arab Republic,Peru,G,Government,FI,P,Persons,0,5,0,0,0
+2018,TUR,PER,Turkey,Peru,G,Government,FI,P,Persons,0,39,0,0,0
+2018,UKR,PER,Ukraine,Peru,G,Government,FI,P,Persons,0,0,0,0,5
+2018,VEN,PER,Venezuela (Bolivarian Republic of),Peru,G,Government,FI,P,Persons,0,390,0,1430,191
+2019,CMR,PER,Cameroon,Peru,G,Government,FI,P,Persons,0,5,0,0,5
+2019,COL,PER,Colombia,Peru,G,Government,FI,P,Persons,0,10,0,5,0
+2019,CUB,PER,Cuba,Peru,G,Government,FI,P,Persons,0,79,0,18,59
+2019,DOM,PER,Dominican Republic,Peru,G,Government,FI,P,Persons,0,5,0,0,0
+2019,HTI,PER,Haiti,Peru,G,Government,FI,P,Persons,0,11,0,0,5
+2019,NIC,PER,Nicaragua,Peru,G,Government,FI,P,Persons,0,5,0,0,0
+2019,PHL,PER,Philippines,Peru,G,Government,FI,P,Persons,0,0,0,5,5
+2019,TUR,PER,Turkey,Peru,G,Government,FI,P,Persons,0,5,0,0,0
+2019,UKN,PER,NA,Peru,G,Government,FI,P,Persons,0,0,0,0,5
+2019,VEN,PER,Venezuela (Bolivarian Republic of),Peru,G,Government,FI,P,Persons,0,578,0,2641,171

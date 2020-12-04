@@ -1,0 +1,71 @@
+---
+title: "R Markdown"
+output: html_document
+---
+
+Esto es un archivo RMarkdown. Contiene texto plano intercalado con bloques de código grises. Puedes usar este archivo para tomar notas y correr código. Por ejemplo, puedes escribir tu nombre en la línea de abajo (línea 7). Pruébalo:
+
+
+```{r}
+# Puedes escribir comentarios en los bloques de código.
+# Dentro del código, "#" significa que empieza un comentario
+# y lo que viene luego de "#" no se ejecuta. 
+# Este bloque usa la función plot (que ya viene en R)
+# y el dataset cars para hacer un gráfico.
+# Para correr el código, haz click en el botón
+# play verde, arriba a la derecha del bloque. Pruébalo
+plot(cars)
+```
+
+Buen trabajo! Los resultados del código aparecen justo luego del bloque. Puedes presionar x sobre los resultados para cerrarlos.
+
+# Agregar bloques
+
+Para insertar un nuevo bloque, presiona el botón *Insert* en la parte superior de este documento hacia la derecha, luego selecciona *R*. R Markdown agregará un bloque vacío en donde se encuentre el cursor.
+
+Prueba insertar un nuevo bloque a continuación:
+
+
+Buen trabajo! Durante el taller ubicaremos todos los códigos R dentro de bloques de código.
+
+```{r}
+# A veces, querrás correr solo parte del código 
+# de un bloque. Para eso, selecciona el código que quieras 
+# correr y presiona Ctrl+Enter (o Command si Mac)
+# Si no seleccionas ningún código, R correrá la parte del
+# código en la que se encuentre el cursor. Pruébalo
+# Corre mean(1:5) pero no la línea que se encuentra debajo.
+mean(1:5)
+warning("No debes correr esto!")
+```
+
+```{r}
+# Puedes presionar la flecha apuntando hacia abajo para correr 
+# todos los bloques anteriores a este. Es útil para cuando en 
+# el bloque actual usas variables definidas en otros bloques.
+# Sys.Date()
+```
+
+En el bloque anterior solo hay comentarios. Por eso, si lo corres nada pasará. 
+
+Remueve el `#` de la ultima linea del bloque anterior y corre de nuevo el bloque. Puedes decir que hace la función `Sys.Date()`?
+
+# Formateo de texto
+
+Prueba un poco de formateo. Escribe a continuación una lista de ingredientes de tu postre favorito. Resalta con negritas los ingredientes más importantes.
+
+# Reports
+
+Cuando presionas el botón `knit` en la parte superior del archivo RMarkdown, R Markdown genera un output pulido de tu reporte. RStudio abrirá una copia del reporte por ti. Por ahora, solo trabajaremos con archivos HTML. Prueba presionar *Knit*!
+
+Buen trabajo!
+
+# Paquetes de R 
+
+Descomenta (borra el `#` del principio del bloque) la línea de código del siguiente bloque. Presiona *Knit* nuevamente
+
+```{r}
+#ggplot(data = diamonds) + geom_point(aes(x = carat, y = price))
+```
+
+Obtenemos un error. Por que crees que se produce?

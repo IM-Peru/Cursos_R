@@ -1,0 +1,697 @@
+---
+title: "Intro"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: ["default", "default-fonts", "custom.css"]
+    mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+    lib_dir: libs
+    seal: false
+    nature:
+      ratio: 13:9
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(fig.height=5) 
+library(ggplot2)
+library(readr)
+library(here)
+library(dplyr)
+library(colorspace)
+paleta <- rainbow_hcl(10)
+print_it_rainbow <- function(palabra, paleta) {
+  i_font = 1
+  for (char in palabra) {
+    if (char != " ") {
+      cat(paste0("<font style='color:", paleta[i_font] , "'>",char,"</font>"))
+      i_font = i_font %% length(paleta) + 1
+    } else {
+      cat(" ")
+    }
+  }
+}
+```
+
+background-color: #272822
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+```{r, results='asis', echo=FALSE}
+cat("<h1 style='color:white'> <center> R para contextos humanitarios de emergencia")
+cat("</center></h1> \n")
+cat("## <center>")
+palabra = unlist(strsplit("Introducción", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center> \n")
+cat("### <center>")
+fecha = as.character(Sys.Date())
+palabra = unlist(strsplit("Violeta Roizman", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center>")
+```
+
+---
+<div class="my-header"></div>
+
+```{r, results='asis', echo=FALSE}
+cat("##")
+palabra = unlist(strsplit("Hola!", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("\n")
+```
+
+- Me llamo **Violeta**
+
+- Soy **Matemática** e **Instructora Certificada por RStudio**
+
+- Me gusta **visualizar datos, visitar museos, tomar té, etc, etc.**
+
+<center>
+<img src="img/grafico.jpg" alt="Hex stickers" width="250">
+<img src="img/te.jpg" alt="Hex stickers" width="280">
+</center>
+
+<center>
+<img src="img/museo.jpg" alt="Hex stickers" width="200">
+</center>
+
+---
+<div class="my-header"></div>
+
+## Objetivos del taller
+
+- Entender qué son y para qué sirven R y RStudio
+- Saber buscar ayuda en el mundo R
+- Poder hacer un análisis de datos sencillo y completo, todo en R
+- Poder aprovechar R para introducirlo en su flujo de trabajo habitual
+
+
+## Modalidad del taller
+
+
+- Presentación de los temas con ejemplos
+- Ejercicios intercalados para interactuar
+- "Live coding"
+
+
+## Requisitos
+
+- Asumimos que ya tienen instalado R y RStudio
+- En caso contrario: seguir los pasos en este video  
+
+---
+<div class="my-header"></div>
+
+## Programa tentativo
+
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-jass{background-color:#656565;border-color:#9b9b9b;color:#FFF;font-weight:bold;text-align:center;vertical-align:top}
+.tg .tg-3gal{background-color:#656565;border-color:#9b9b9b;color:#FFF;text-align:center;vertical-align:top}
+.tg .tg-meum{background-color:#656565;border-color:#9b9b9b;font-weight:bold;text-align:center;vertical-align:top}
+.tg .tg-fz0b{background-color:#FFF;border-color:#9b9b9b;color:#343434;text-align:center;vertical-align:top}
+.tg .tg-gzjo{background-color:#FFF;border-color:#9b9b9b;text-align:left;vertical-align:top}
+.tg .tg-o92t{background-color:#656565;border-color:#9b9b9b;text-align:left;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-meum"></th>
+    <th class="tg-jass">Día 1 (25/11)</th>
+    <th class="tg-jass">Día 2 (26/11)</th>
+    <th class="tg-jass">Día 3 (27/11)</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-3gal">09:00-10:00</td>
+    <td class="tg-fz0b">Intro al curso</td>
+    <td class="tg-fz0b">Visualizacion de datos</td>
+    <td class="tg-gzjo" rowspan="6"><br><br><br><span style="color:#343434">- Paquete koboloader </span><br><span style="color:#343434">- QualMiner: Análisis de texto </span><br><span style="color:#343434">- Tratamiento y pocesamiento de datos - 5W</span></td>
+  </tr>
+  <tr>
+    <td class="tg-3gal">10:00-10:05</td>
+    <td class="tg-3gal">Pausa</td>
+    <td class="tg-3gal">Pausa</td>
+  </tr>
+  <tr>
+    <td class="tg-3gal">10:05-10:55</td>
+    <td class="tg-fz0b">Intro a R y RStudio</td>
+    <td class="tg-fz0b">Visualizacion + Manipulacion</td>
+  </tr>
+  <tr>
+    <td class="tg-3gal">10:55-11:10</td>
+    <td class="tg-3gal">Pausa</td>
+    <td class="tg-3gal">Pausa</td>
+  </tr>
+  <tr>
+    <td class="tg-3gal">11:10-11:40</td>
+    <td class="tg-fz0b">RStudio y proyectos</td>
+    <td class="tg-fz0b">Mas manipulacion y funciones</td>
+  </tr>
+  <tr>
+    <td class="tg-3gal">11:40-11:45</td>
+    <td class="tg-3gal">Pausa</td>
+    <td class="tg-3gal">Pausa</td>
+  </tr>
+  <tr>
+    <td class="tg-3gal">11:45-13:00</td>
+    <td class="tg-fz0b"> RMarkdown</td>
+    <td class="tg-fz0b">Interactuar con Kobo y Power BI</td>
+    <td class="tg-o92t"></td>
+  </tr>
+  <tr>
+    <td class="tg-3gal">13:00-14:00</td>
+    <td class="tg-3gal">Almuerzo</td>
+    <td class="tg-3gal">Almuerzo</td>
+    <td class="tg-o92t"></td>
+  </tr>
+  <tr>
+    <td class="tg-3gal">14:00-15:00</td>
+    <td class="tg-fz0b">Lectura de datos</td>
+    <td class="tg-fz0b">Gráficos, reportes y tablas</td>
+    <td class="tg-o92t"></td>
+  </tr>
+  <tr>
+    <td class="tg-3gal">15:00-16:00</td>
+    <td class="tg-fz0b">Manipulacion de datos</td>
+    <td class="tg-fz0b">Gráficos, reportes y tablas</td>
+    <td class="tg-o92t"></td>
+  </tr>
+</tbody>
+</table>
+
+
+---
+<div class="my-header"></div>
+
+
+## Desafíos de hoy
+
+
+- Leer correctamente una base de datos
+
+- Generar nuevas columnas a partir de información de otras columnas y generar resúmenes a partir de los datos
+
+- Generar gráficos a partir de la base de datos usada
+
+
+---
+<div class="my-header"></div>
+
+```{r xaringan-editable, echo=FALSE}
+xaringanExtra::use_editable(expires = 1)
+```
+
+```{r, results='asis', echo=FALSE}
+cat("## ")
+palabra = unlist(strsplit("Qué herramientas para análisis de datos utilizan?", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+```
+
+.flex[
+.can-edit[
+- Excel
+- GIS
+- Power BI
+- Word
+]
+]
+
+.flex[
+.w-50[
+**Ventajas**
+.can-edit.key-rstudio-gets-me[
+- Intuitivos para usar
+]
+]
+
+.w-50[
+**Desventajas**
+.can-edit.key-rstudio-gets-me-not[
+- Son muy específicos para cada tarea
+]
+]
+]
+
+
+
+---
+<div class="my-header"></div>
+
+## Si ya tenemos:
+
+- Excel
+- Kobo
+- GIS
+- Power BI
+- Word
+- InDesign
+- Ilustrator
+
+## Entonces por qué R?
+
+## Porque con R podemos:
+
+- Realizar la mayoría de esas tareas
+- Automatizar procesos
+- Interactuar facilmente con muchas herramientas
+
+Y además... es abierto y gratuito
+
+---
+
+```{r, results='asis', echo=FALSE}
+cat("## ")
+palabra = unlist(strsplit("Desventaja", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+```
+
+<center><img src="img/anteseratipo.png" alt="Hex stickers" height="510"></center>
+
+
+---
+<div class="my-header"></div>
+
+## Algunas cosas que podemos hacer en R
+
+- Leer datos
+- Transformar y resumir datos
+- Visualizar datos
+- Generar reportes automáticos
+
+- Crear sitios web. p. ej.: https://violetr.netlify.app/
+
+- Desarrollar aplicaciones interactivas: 
+  - https://shiny.rstudio.com/gallery/india-blood-banks.html
+  - https://violetr.shinyapps.io/hiv_hnp/
+  - https://vac-lshtm.shinyapps.io/ncov_tracker
+  
+---
+<div class="my-header"></div>
+
+## R en contextos humanitarios de emergencia
+
+- Hay un grupo de usuarios y desarrolladores de R que trabajan en esta área:
+[HumanitaRian useR group](https://humanitarian-user-group.github.io/about/)
+  - Creado en una reunión de la UNHCR
+  - Blog y grupo de Skype
+
+
+- Documentación y Reproducibilidad de los procesos
+- Hay funciones específicamente hechas para manejar este tipo de datos y conectarse con herramientas populares como Kobo
+- Existes manuales de buenas prácticas sobre como crear reportes. Por ejemplo, [How to quickly produce statistical reports?
+The UNHCR “R-Cookbook”](https://edouard-legoupil.github.io/unhcr_paged/)
+
+
+---
+<div class="my-header"></div>
+
+## Material del curso
+
+El material del taller está disponible en 
+
+.flex[
+.can-edit[
+- url
+]
+]
+
+Licencia: [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/deed.es_ES).
+
+Este material está inspirado en:
+
+- [R para Clima](https://eliocamp.github.io/r-clima/) de Paola Corrales y Elio Campitelli
+
+- [Master the Tidyverse](https://github.com/rstudio-education/master-the-tidyverse-instructors) de Garrett Grolemund
+
+
+
+
+
+---
+
+
+background-color: #272822
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+```{r, results='asis', echo=FALSE}
+cat("# <center>")
+palabra = unlist(strsplit("Empezamos!", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center>")
+```
+
+
+---
+
+<div class="my-header"></div>
+
+## Qué es R? Qué es RStudio?
+
+- R es el lenguaje de programación, es la forma de darle instrucciones a la computadora 
+
+- RStudio es la interfaz gráfica (lo que vemos)
+
+
+
+
+![](img/lenguajes.png)
+
+---
+
+<div class="my-header"></div>
+
+## RStudio: Como se ve la primera vez
+
+A la izquierda, en la consola, podemos escribir código en R 
+
+Este se ejecutará al apretar `Enter`
+
+![](img/Rstudio.png)
+
+
+
+
+---
+
+<div class="my-header"></div>
+
+## RStudio: Como se ve habitualmente
+
+Vamos a hacer cosas interesantes, y vamos a querer guardarlas
+
+Por eso la configuración normal de RStudio será asi, con cuatro paneles
+
+El de arriba a la izquierda es un bloc de notas
+
+![](img/Rstudio2.png)
+
+
+---
+
+<div class="my-header"></div>
+
+## RStudio culinario
+
+![](img/rstudio-cocina.png)
+<p style="color: gray; font-size:15px"> Imagen del curso "R para Clima" - Paola Corrales y Elio Campitelli <br>
+https://eliocamp.github.io/r-clima/index.html
+</p>
+
+---
+
+<div class="my-header"></div>
+
+## Cómo le damos instrucciones a R?
+
+Como ya vieron en el video para instalar R, podemos pedirle a R que compute operaciones básicas.
+Y también no tan básicas.
+
+```{r}
+2 + 2
+```
+
+```{r}
+sqrt(2)
+```
+
+Esto solo nos devuelve el valor
+
+Pero si queremos guardarlo en algún lugar (para que quede disponible en la mesada):
+
+```{r}
+raiz_dos <- sqrt(2)
+raiz_dos
+```
+
+---
+<div class="my-header"></div>
+## Variables en R
+
+```{r}
+raiz_dos <- sqrt(2)
+raiz_dos
+```
+
+**En Excel:**
+
+Es parecido a hacer =SQRT(2) (o =RCUAD(2)) en la celda A2
+
+Sabemos que ese resultado está en la celda A2
+
+**En R:**
+
+Ese resultado está en la variable `raiz_dos` que aparece en el environment (la mesada)
+
+**Pero... La analogía no es 100% util:**
+[https://PollEv.com/multiple_choice_polls/P2xOvcUGbMWv91CLwX6o1/respond](https://PollEv.com/multiple_choice_polls/P2xOvcUGbMWv91CLwX6o1/respond)
+```{r}
+x <- 2
+y <- x + 2
+x <- 3
+```
+
+---
+<div class="my-header"></div>
+## Vectores en R
+
+- Es la unidad básica en R
+- Casi todo es un vector (por eso vemos el [1] a la izquierda en los resultados)
+- Todos los elementos de un vector son de un mismo tipo (numérico, caracter, etc)
+
+```{r}
+vector1 <- c(3, 5, 6.1, 7)
+vector1
+```
+
+```{r}
+vector2 <- 1:20
+vector2
+```
+
+Puedo calcular el promedio de los elementos de un vector
+```{r}
+mean(vector2)
+```
+
+---
+<div class="my-header"></div>
+## Vectores en R
+
+```{r}
+vector1 <- c(3, 5, 6.1, 7)
+vector1
+```
+
+Puedo acceder al elemento que está en el lugar 2 del vector 
+
+```{r}
+vector1[2]
+```
+
+Puedo obtener todos los valores de un vector salvo el elemento del lugar 2 asi:
+
+```{r}
+vector1[-2]
+```
+
+---
+<div class="my-header"></div>
+
+## Listas en R
+
+Qué pasa si quiero guardar más de un tipo de elemento en una variable?
+
+Listas! se crean con list() y pueden contener cualquier tipo de datos, incluso listas
+
+```{r}
+mi_agenda <- list(Carlos = c(tel = 41232342),
+                  Maria = c(tel = 25362819, edad = 25))
+mi_agenda$Carlos
+mi_agenda[[2]]
+```
+
+
+---
+<div class="my-header"></div>
+## Funciones en R
+
+R tiene funciones útiles incorporadas directamente
+
+> `sqrt`, `+`,  `-`, `mean`, `sum`, etc
+
+Se aplican a una o más variables y devuelven un valor
+
+Las entradas de las funciones (puede ser 1 o más) se llaman parámetros
+
+Pueden ser obligatorios u opcionales
+
+> `sqrt` se aplica a un número positivo y devuelve su raíz cuadrada
+
+Pero... nuestro objetivo es **realizar análisis de datos** 
+
+`r emo::ji("star")` **necesitamos más funciones!** `r emo::ji("star")`
+
+Tenemos acceso a más funciones que las básicas a partir de **paquetes**  `r emo::ji("gift")[1]`
+
+---
+<div class="my-header"></div>
+## Hay muuuuchos paquetes de R
+
+- De distintas áreas del conocimiento: 
+  - Genética, 
+  - Ciencia de datos en general, 
+  - R humanitario, etc.
+
+- Podemos hacer nuestro propio paquete para nuestro flujo de trabajo
+
+<center><img src="img/aushex.png" alt="Hex stickers" height="320"></center>
+
+
+---
+<div class="my-header"></div>
+## Ciencia de datos
+
+Flujo de trabajo:
+
+![](img/data-science.svg)
+
+Existe un **conjunto de paquetes** para realizar estas tareas
+
+<center><img src="img/hex-tidyverse.png" alt="Hex stickers" height="150"></center>
+
+<p style="color: gray; font-size:13px"> Imágenes de "R para Ciencia de Datos" y Rstudio</p>
+
+---
+<div class="my-header"></div>
+## `tidyverse`
+
+- tidy = ordenado
+- ...verse = universo
+
+<center><img src="img/tidyhexall.png" alt="Hex stickers" height="360s"></center>
+
+
+---
+<div class="my-header"></div>
+## Instalar paquetes en R
+
+Para instalar paquetes, usamos la función `install.packages()`
+
+```{r eval=FALSE}
+install.packages("readr")
+```
+
+instala un paquete que contiene funciones para leer datos.
+
+Usando el comando
+
+```{r, eval=FALSE}
+library(readr)
+```
+
+Las funciones del paquete `readr` estarán disponibles. p. ej.: `read_csv`
+
+**Tu turno:** Instalar el paquete `readr`
+
+**Tu turno Bis:** Instalar `tidyverse`
+
+---
+<div class="my-header"></div>
+## Pedir ayuda en R
+
+Hay muchas formas de pedir ayuda en R
+
+
+Una opción es usar la **ayuda de R**
+
+```{r, eval=FALSE}
+?nombre_funcion
+```
+
+- `Description`: breve descripción de la función 
+
+- `Usage`
+
+- `Arguments`: argumentos de la función
+
+- `Details`
+
+- `Value`: lo que devuelve la función
+
+- `Examples`
+
+**Tu turno:** Abre y lee la ayuda de la función `sd()`. Puede que haya cosas que aún no entiendas, pero trata de captar la idea general. ¿Qué hace esa función? ¿Qué argumentos acepta?
+
+---
+<div class="my-header"></div>
+## Pedir ayuda en R
+
+Otra opción es **preguntar a instructor@ o colegas**
+
+Otra, **googlear** 
+
+Fórmula "óptima" (para mi) para googlear:
+
+> R + pregunta o error descriptivo y específico
+
+o, si estamos usando tidyverse
+
+> tidyverse + pregunta o error descriptivo y específico
+
+Es mejor buscar en inglés (hay más material)
+
+Algunas buenas fuentes:
+
+- stackoverflow (Preguntas y respuestas)
+- rstudio community (Foro)
+
+---
+<div class="my-header"></div>
+
+## Material del curso
+
+El material del taller está disponible en 
+
+.flex[
+.can-edit[
+- url
+]
+]
+
+---
+<div class="my-header"></div>
+
+## Licencia y materiales
+
+Licencia: [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/deed.es_ES).
+
+Este material está inspirado y utiliza explicaciones de:
+
+- [R para Clima](https://eliocamp.github.io/r-clima/) de Paola Corrales y Elio Campitelli
+
+- [Master the Tidyverse](https://github.com/rstudio-education/master-the-tidyverse-instructors) de Garrett Grolemund
+

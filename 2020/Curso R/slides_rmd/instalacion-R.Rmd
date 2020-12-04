@@ -1,0 +1,156 @@
+---
+title: "R y RStudio"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+    lib_dir: libs
+    seal: false
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+#pagedown::chrome_print("C:\\Users\\violeta\\Documents\\AdvStats\\EM_algo.html")
+knitr::opts_chunk$set(fig.height=5) 
+library(ggplot2)
+library(readr)
+library(here)
+library(dplyr)
+library(colorspace)
+paleta <- rainbow_hcl(10)
+print_it_rainbow <- function(palabra, paleta) {
+  i_font = 1
+  for (char in palabra) {
+    if (char != " ") {
+      cat(paste0("<font style='color:", paleta[i_font] , "'>",char,"</font>"))
+      i_font = i_font %% length(paleta) + 1
+    } else {
+      cat(" ")
+    }
+  }
+}
+```
+
+background-color: #272822
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+```{r, results='asis', echo=FALSE}
+cat("# <center>")
+palabra = unlist(strsplit("R y RStudio", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center> \n")
+cat("## <center>")
+palabra = unlist(strsplit("Descarga e instalación", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center> \n")
+cat("### <center>")
+fecha = as.character(Sys.Date())
+palabra = unlist(strsplit("18-11-2020", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center>")
+```
+
+---
+
+# Objetivo
+
+- Instalar el lenguaje de programación R 
+- Instalar RStudio (una interfaz gráfica para usar R más cómodamente) 
+
+Sistema operativo: Windows 10
+
+# Tareas
+
+- Descargar R
+- Instalar R 
+- Descargar RStudio
+- Instalar RStudio 
+
+
+---
+
+# Descargar R
+
+
+## https://cran.r-project.org/bin/windows/base/
+
+---
+
+background-color: #272822
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+```{r, results='asis', echo=FALSE}
+cat("# <center>")
+palabra = unlist(strsplit("Instalar R", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center> \n")
+```
+
+
+---
+
+# Descargar RStudio
+
+
+
+### https://rstudio.com/products/rstudio/download/#download
+
+---
+
+
+background-color: #272822
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+```{r, results='asis', echo=FALSE}
+cat("# <center>")
+palabra = unlist(strsplit("Instalar RStudio", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center> \n")
+```
+
+---
+
+
+
+background-color: #272822
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+```{r, results='asis', echo=FALSE}
+cat("# <center>")
+palabra = unlist(strsplit("Listo!", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center> \n")
+```
+

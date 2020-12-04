@@ -1,0 +1,249 @@
+---
+title: "Lectura de datos"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: ["default", "default-fonts", "custom.css"]
+    mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+    lib_dir: libs
+    seal: false
+    nature:
+      ratio: 13:9
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(fig.height=5) 
+library(ggplot2)
+library(readr)
+library(here)
+library(dplyr)
+library(colorspace)
+paleta <- rainbow_hcl(10)
+print_it_rainbow <- function(palabra, paleta) {
+  i_font = 1
+  for (char in palabra) {
+    if (char != " ") {
+      cat(paste0("<font style='color:", paleta[i_font] , "'>",char,"</font>"))
+      i_font = i_font %% length(paleta) + 1
+    } else {
+      cat(" ")
+    }
+  }
+}
+```
+
+background-color: #272822
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+```{r, results='asis', echo=FALSE}
+cat("<h1 style='color:white'> <center> R para contextos humanitarios de emergencia")
+cat("</center></h1> \n")
+cat("## <center>")
+palabra = unlist(strsplit("Lectura de datos", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center> \n")
+cat("### <center>")
+fecha = as.character(Sys.Date())
+palabra = unlist(strsplit("Violeta Roizman", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center>")
+```
+
+---
+<div class="my-header"></div>
+## Lectura de datos
+
+En general, el primer paso de nuestro flujo de trabajo es importar los datos a R
+
+Una vez importados los datos, podremos:
+  - Modificarlos
+  - Graficarlos 
+  - Modelarlos
+  - Comunicar nuestros resultados
+
+Los tipos de archivos de almacenamiento de datos más comunes son:
+  - Excel
+  - CSV (Comma Separated Values)
+
+Tambien existen
+  - json
+  - XML, etc.
+
+---
+<div class="my-header"></div>
+## Lectura de datos CSV
+
+File > Import Dataset > From Text...(readr)
+
+<center><img src="img/importar-asilo.png" height="450"></center>
+
+---
+<div class="my-header"></div>
+## Lectura de datos CSV - Opciones
+
+2. Seleccionamos el archivo deseado
+
+3. Si es CSV, debe decir Delimiter: Comma
+
+4. También prestar atención donde dice First Row as Names
+
+5. Si hay filas que hay que saltear (que no sean los nombres), podemos usar Skip
+
+6. RStudio adivina el tipo de la columna en base a sus primeros valores, podemos cambiar el tipo si está equivocado 
+
+6. Importante!: Cuando terminamos de elegir las opciones, copiamos el código que se encuentra en el rectángulo `Code Preview`
+
+7. Hacer click en importar
+
+Una vez que importamos datos vamos a tener disponible un dataset del tipo `tibble` en la mesada
+
+---
+<div class="my-header"></div>
+## Lectura de datos
+
+
+La última línea de código que copiamos es 
+
+> `View(nombre_dataset)`
+
+Ese comando sirve para visualizar las filas y columnas del dataset. También si corremos 
+
+> `nombre_dataset`
+
+veremos en la consola (o justo debajo del bloque de código si es un RMarkdown) algunas pocas filas del dataset.
+
+El comando `str(nombre_dataset)` devuelve una descripción general del dataset. Algunos campos que nos devuelve el comando son:
+
+- Tipo de dato (tibble)
+- Tamaño ([filas x columnas])
+- Nombre y tipo de las columnas, etc.
+
+Posibles tipos de columnas: texto (`character`), números (`double`, `numeric`, `integer`), fechas (`Date`, `DateTime`), lógicos (`logical`), categóricas (`factor`), etc.
+
+---
+<div class="my-header"></div>
+## Tu turno: Lectura de datos CSV
+
+1. importar el archivo "decisiones_asilo_peru.csv" (Fuente: UNHCR) con información sobre las decisiones tomadas en Perú frente a los pedidos de asilo recibidos provenientes de distintos países 
+
+2. Indicar que cantidad de filas y columnas tiene
+
+---
+<div class="my-header"></div>
+## Lectura de datos de Excel
+
+File > Import Dataset > From Excel
+
+<center><img src="img/importar-haiti.png" height="450"></center>
+
+
+---
+<div class="my-header"></div>
+## Lectura de datos de Excel
+
+- El paquete utilizado es `readxl`
+
+**Importante!** 
+- Número de página donde se encuentra el dataset
+- Rango de celdas donde se encuentra
+
+---
+background-color: #272822
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+```{r, results='asis', echo=FALSE}
+cat("# <center>")
+palabra = unlist(strsplit("Desafío 1: Lectura de datos ", split = ""))
+cat(print_it_rainbow(palabra, paleta))
+cat("</center> \n")
+```
+
+
+---
+<div class="my-header"></div>
+## DESAFÍO 1: Lectura de datos 
+
+El objetivo de este desafío es que armes un proyecto y  leas una archivo de datos para aplicar lo que aprendas en el resto del curso.
+
+1. Crea un proyecto de RStudio llamado datos-haiti
+
+3. Crea un archivo de RMarkdown (por las dudas, ésta es la sección asociada). 
+
+2. Arma un chunk para leer los datos. Importa el archivo disponible en https://data.humdata.org/dataset/27baf423-2d13-49a4-bd72-cb65d8f924da/resource/9f71ab56-8a9a-4df2-be5d-f26d3600a285/download/dtm-haiti-site-assessment-round-33.xlsx con información sobre distintos campamentos en Haití (Fuente: OIM). 
+
+4. Además de poner un título informativo, describe los datos con tus palabras. ¿Cuál es la fuente? ¿Qué variables incluyen? ¿Cuántas observaciones tiene? ¿Qué tipo de datos tiene cada columna?
+
+---
+<div class="my-header"></div>
+## Observaciones sobre el desafío:
+
+- Notar que se puede importar directo usando el url
+
+- Observa que la segunda fila no debería aparecer como una observación del dataset. En el futuro veremos cómo quitarla
+
+- Esta fila arruina la detección del tipo de todas las columnas numéricas
+
+- Arreglar el tipo de las columnas 
+
+---
+<div class="my-header"></div>
+## Escritura de datos
+
+Les presento las cheatsheets o guías rápidas (en español) `r emo::ji("star")`
+
+[https://rstudio.com/resources/cheatsheets/](https://rstudio.com/resources/cheatsheets/)
+
+Nos describen brevemente la mayoria de las posibilidades que nos brinda un paquete `r emo::ji("gift")`
+
+---
+<div class="my-header"></div>
+## Escritura de datos
+
+Con `readr` puedo escribir archivos csv o de texto
+
+**Tu turno:** Con la ayuda de la guías rápida de `readr` guardar el dataset de haiti con un nombre distinto en la carpeta data
+
+Para escribir archivos excel puedes usar el paquete `xls`
+
+---
+<div class="my-header"></div>
+## Escritura de datos
+
+En este modulo aprendimos a 
+
+- leer datos en R
+  - en formato csv
+  - en formato .xls o .xlsx
+  
+- escribir datos en R 
+
+---
+<div class="my-header"></div>
+
+## Licencia y material usado
+
+Licencia: [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/deed.es_ES).
+
+Este material está inspirado y utiliza explicaciones de:
+
+- [R para Clima](https://eliocamp.github.io/r-clima/) de Paola Corrales y Elio Campitelli
+
+- [Master the Tidyverse](https://github.com/rstudio-education/master-the-tidyverse-instructors) de Garrett Grolemund
